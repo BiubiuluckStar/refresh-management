@@ -1,0 +1,17 @@
+@import url('https://at.alicdn.com/t/c/font_4516873_d7d0nzhnbr9.css');
+h1,h2,h3,h4,p,ul,li{
+  margin: 0;
+  padding: 0;
+}
+ul{
+list-style: none;
+}
+a{
+  text-decoration: none;
+}
+img{
+  vertical-align: middle;
+}
+body{
+  font-size: 14px;
+}
