@@ -16,3 +16,10 @@
 5. npm i querystring -S
 5. npm i normalize.css -S
 6. npm i echarts -S
+
+## 配置路由
+1. layout布局界面
+Element组件配合router路由，el-menu标签中直接设置router与default-active="/"，el-submenu 标签和el-menu-item 标签中设置好唯一标识index，index和path匹配
+就不用再使用router-link标签了，页面跳转渲染组件用router-view标签
+2. 登录界面
+

@@ -1,10 +1,10 @@
 <template>
- <router-view></router-view>
+  <h2>dengl</h2>
 </template>
 
 <script>
 export default {
-name:'App'
+
 }
 </script>
 
