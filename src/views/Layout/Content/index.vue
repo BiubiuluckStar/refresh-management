@@ -3,7 +3,9 @@
     <!-- 顶部 -->
   <Header @changeIsLeftLess="changeIsLeftLess"></Header>
   <!-- 内容 -->
+ <div class="warpper">
   <router-view></router-view>
+ </div>
    </div>
 </template>
 
@@ -34,5 +36,8 @@ methods:{
 }
 .small{
     padding-left:64px;
+}
+.warpper{
+  padding: 10px;
 }
 </style>

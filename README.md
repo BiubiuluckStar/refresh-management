@@ -23,3 +23,13 @@ Element组件配合router路由，el-menu标签中直接设置router与default-a
 就不用再使用router-link标签了，页面跳转渲染组件用router-view标签
 2. 登录界面
 
+## 后台部分
+nodejs +mysql +Express
+下载后台依赖
+1. npm i express mysql -S
+2. npm i mockjs multer -S
+3. npm i nprogress
+4. npm install echarts --save
+
+## 遇到难点一
+刷新页面后echart图标数据会丢失，利用会话存储方式来解决
