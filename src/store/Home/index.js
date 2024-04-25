@@ -18,7 +18,6 @@ const actions = {
   // 图形
   async getFormatInfo({commit}){
   let result = await reqFormatInfo()
-  console.log(result.result.data.sale_money);
   if(result.status = true){
     commit('GetFormatInfo',result.result.data.sale_money)
   }

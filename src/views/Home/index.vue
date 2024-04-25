@@ -103,13 +103,12 @@ export default {
   mounted() {
     this.$store.dispatch("home/getHomeTotal");
     this.$store.dispatch("home/getorderinfo");
-    this.echarts(this.arrx,this.amount,this.money)
-    this.pie();
+   this.$store.dispatch("home/getFormatInfo");
     this.getData()
   },
   computed: {
     ...mapState("home", ["homeInfo", "orderinfo", "formatInfo"]),
-   ...mapGetters('home',['arrx','amount','money','saleMoney'])
+   ...mapGetters('home',['arrx','amount','money','saleMoney']),
   
   },
   // 过滤器去处理数据格式
@@ -127,7 +126,7 @@ export default {
           trigger: "axis",
         },
         xAxis: {
-          data: JSON.parse(sessionStorage.getItem('arrx')),
+          data: JSON.parse(sessionStorage.getItem('arrx')) ,
         },
         legend: {},
         yAxis: {},
@@ -135,13 +134,13 @@ export default {
           {
             name: "销售量",
             type: "line", //bar最常见的柱状图 line 折线图 pie饼图 map 地图
-            data: JSON.parse(sessionStorage.getItem('amount')),
+            data: JSON.parse(sessionStorage.getItem('amount')) ,
             smooth: true,
           },
           {
             name: "销售额",
             type: "bar", //bar最常见的柱状图 line 折线图 pie饼图 map 地图
-            data: JSON.parse(sessionStorage.getItem('money')),
+            data: JSON.parse(sessionStorage.getItem('money')) ,
             smooth: true,
           },
         ],
@@ -185,6 +184,8 @@ export default {
         sessionStorage.setItem('amount',JSON.stringify(this.amount))
         sessionStorage.setItem('money',JSON.stringify(this.money))
         sessionStorage.setItem('saleMoney',JSON.stringify(this.saleMoney))
+        this.echarts()
+        this.pie();
       } catch (error) {
         console.warn(error)
       }

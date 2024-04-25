@@ -33,3 +33,9 @@ nodejs +mysql +Express
 
 ## 遇到难点一
 刷新页面后echart图标数据会丢失，利用会话存储方式来解决
+刚加载数据不返回刷新后数据返回，在获得数据之后初始化echarts图表实例
+
+## 时间格式处理
+使用 day.js
+1.安装 npm i dayjs -S
+2.使用

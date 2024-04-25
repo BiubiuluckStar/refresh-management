@@ -27,17 +27,25 @@
         </div>
       </div>
       <!-- 产品列表 -->
-      <div class="content">
-        <el-table :data="tableData" border style="width: 100%" >
-          <el-table-column
-      type="selection"
-      width="55">
-    </el-table-column>
-      <el-table-column  prop="date"  label="日期"  width="180">
+      <div class="content" >
+        <el-table :data="tableData" border  header-row-class-name="active-header" 
+        style="width: 100%" :header-cell-style="{ textAlign: 'center' }"
+        :cell-style="{ textAlign: 'center' }" >
+      <el-table-column type="selection" width="55"></el-table-column>
+      <el-table-column  prop="id"  label="商品编号"  width="100"></el-table-column>
+      <el-table-column  prop="title" label="商品名称" width="130"></el-table-column>
+      <el-table-column  prop="price" label="商品价格" width="130"></el-table-column>
+      <el-table-column  prop="category" label="商品类目" width="130"></el-table-column>
+      <el-table-column  prop= "create_time" label="添加时间" width="150">
+        <template slot-scope="scope">
+          <span>{{ dayjs(scope.row.create_time).format('YYYY-MM-DD HH:mm:ss') }}</span>
+        </template>
       </el-table-column>
-      <el-table-column  prop="name" label="姓名" width="180">
-      </el-table-column>
-      <el-table-column prop="address" label="地址">
+      <el-table-column  prop="sellPoint" label="商品卖点" width="130" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="descs" label="商品描述" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span>{{ removeHTMLTag(scope.row.descs) }}</span>
+        </template>
       </el-table-column>
       <el-table-column label="操作">
       <template slot-scope="scope">
@@ -52,44 +60,38 @@
     </el-table-column>
           </el-table>
       </div>
+       <div class="pagination">
+        <pagination />
+       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import dayjs from 'dayjs';
+import {removeHTMLTag} from '@/utils'
 export default {
   name: "List",
+  mounted(){
+    this.getData()
+    this.$bus.$on('receiveCurrentPage',this.currentPage)
+  },
+  computed:{
+    ...mapState('product',['productList'])
+  },
   data() {
     return {
       formInline: {
         ProductName: "",
         date: "",
       },
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-      ],
+      tableData: JSON.parse(sessionStorage.getItem('productList'))
     };
   },
   methods: {
+    dayjs,
+    removeHTMLTag,
     onSubmit() {
       console.log("submit!");
     },
@@ -98,6 +100,17 @@ export default {
       },
       handleDelete(index, row) {
         console.log(index, row);
+      },
+      async getData(page){
+      try {
+        await this.$store.dispatch('product/getProductList',page)
+        sessionStorage.setItem('productList',JSON.stringify(this.productList))
+      } catch (error) {
+        console.warn(error);
+      }
+      },
+      currentPage(val){
+       this.getData(val)
       }
   },
 };
@@ -123,5 +136,12 @@ export default {
   }
 }
 .content {
+  background-color: #fff;
+  .active-header{
+    color:black ;
+  }
 }
+.pagination{
+    padding:10px
+  }
 </style>
