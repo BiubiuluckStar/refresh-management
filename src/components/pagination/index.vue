@@ -12,27 +12,25 @@
 
 <script>
 import { mapState } from 'vuex';
+
 export default {
   mounted(){
-    this.$store.dispatch('product/getProductList')
-    console.log(this.total);
+   this.$store.dispatch('product/getProductList')
+   this.$bus.$emit('changePagination',this.changePagination)
   },
   computed:{
-  ...mapState('product',['productList']),
-  // 总条数
-  total(){
-   return this.productList.length
-  },
-  // 每页多少条
-  pageSize(){
-    return this.productList.pageSize
-  },
-
+    ...mapState('product',['productList','searchList']),
+    total(){
+      return this.productList.total
+    },
+    pageSize(){
+      return this.productList.pageSize
+    }
   },
   methods: {
       handleCurrentChange(val) {
         this.$bus.$emit('receiveCurrentPage',val)
-      }
+      },
     },
     data() {
       return {

@@ -10,7 +10,7 @@ import OrderReview from '@/views/Order/OrderReview'
 import SummaryList from '@/views/Order/SummaryList'
 import Advertisement from '@/views/Advertisement'
 import AdverList from '@/views/Advertisement/AdverList'
-
+import AboutProduct from '@/views/Product/List/AboutProduct'
 
 export default [
   {
@@ -29,12 +29,17 @@ export default [
           {
         name:'list',
         path:'list',
-        component:List
+        component:List,
           },
           {
         name:'category',
         path:'category',
         component:Category
+          },
+          {
+            name:'aboutProduct',
+            path:'aboutProduct',
+            component:AboutProduct,
           }
         ]
       },
