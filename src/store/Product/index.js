@@ -1,4 +1,4 @@
-import { reqProjectList, reqSearchList,deleteProduct } from '@/API'
+import { reqProjectList, reqSearchList,deleteProduct,reqProductCategory } from '@/API'
 const actions = {
   // 商品列表
   async getProductList({ commit }, page) {
@@ -27,7 +27,9 @@ const actions = {
   else{
     return Promise.reject(Error('faile'))
   }
-  }
+  },
+
+
 }
 const mutations = {
   GetProductList(state, val) {
@@ -35,12 +37,13 @@ const mutations = {
   },
   getSearchList(state, val) {
     state.searchList = val
-  }
+  },
+
 }
 const getters = {}
 const state = {
   productList: [],
-  searchList: []
+  searchList: [],
 }
 export default {
   namespaced: true,

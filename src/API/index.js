@@ -18,3 +18,6 @@ export const reqSearchList=(params)=> requests.get('/goods/search', { params });
 
 // 商品单个删除
 export const deleteProduct = (params)=>requests.get('/goods/deleteItemById',{params})
+
+// 商品类目 params:{type:cid}
+export const reqProductCategory = (params)=>requests.get('/goods/itemCategory/selectItemCategoryByParentId',{params})

@@ -37,9 +37,13 @@ export default [
         component:Category
           },
           {
-            name:'aboutProduct',
+            name:'aboutProduct', //商品添加与编辑与查看
             path:'aboutProduct',
             component:AboutProduct,
+            meta:{
+              //配置高亮标识
+              activeMenu:'/product/list'
+            }
           }
         ]
       },

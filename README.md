@@ -45,3 +45,13 @@ nodejs +mysql +Express
 ### 删除商品的时候,如果当前是最后一页的最后一条数据,应该获取当前页的上一页数据
 计算当前商品是不是这一页的最后一条数据,利用total与pagsize取余判断==1
 如果是则跳转上一页
+
+## el-tree的使用
+props	配置选项，	object
+load	加载子树数据的方法，仅当 lazy 属性为true 时生效	function(node, resolve)
+show-checkbox	节点是否可被选择	boolean	—	false
+lazy:是否为懒加载,层层加载
+label	指定节点标签为节点对象的某个属性值	string, function(data, node)	—	—
+children	指定子树为节点对象的某个属性值	string	—	—
+disabled	指定节点选择框是否禁用为节点对象的某个属性值	boolean, function(data, node)	—	—
+isLeaf	指定节点是否为叶子节点，仅在指定了 lazy 属性的情况下生效	boolean, function(data, node)

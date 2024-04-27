@@ -8,6 +8,7 @@ import '@/plugins/element'
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css'  //还会保留标签字体样式
 // import '@/assets/css/base.css'
+import *  as API from  '@/API'
 Vue.config.productionTip = false
 // 注册
 Vue.component('pagination',pagination)
@@ -17,6 +18,8 @@ new Vue({
   render: h => h(App),
 beforeCreate(){
   Vue.prototype.$bus = this
+  Vue.prototype.$API = API
+
 },
   router,
   store,
