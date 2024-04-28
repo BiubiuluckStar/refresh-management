@@ -19,7 +19,6 @@ new Vue({
 beforeCreate(){
   Vue.prototype.$bus = this
   Vue.prototype.$API = API
-
 },
   router,
   store,

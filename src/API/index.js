@@ -21,3 +21,10 @@ export const deleteProduct = (params)=>requests.get('/goods/deleteItemById',{par
 
 // 商品类目 params:{type:cid}
 export const reqProductCategory = (params)=>requests.get('/goods/itemCategory/selectItemCategoryByParentId',{params})
+
+// 导出图片上传的地址
+export const reqUploadImage = './api/upload/'
+//公共接口
+export const host = ' http://localhost:7080'
+
+

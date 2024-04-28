@@ -1,5 +1,5 @@
 <template>
-  <el-tree :props="props" :load="loadNode" lazy> </el-tree>
+  <el-tree  accordion :props="props" :load="loadNode" lazy @node-click="passNodeData"> </el-tree>
 </template>
 <script>
 export default {
@@ -18,7 +18,6 @@ export default {
     async loadNode(node, resolve) {
       if (node.level === 0) {
         let result = await this.getDataTree(1);
-        console.log(result);
         return resolve(result.splice(0, 6));
       }
       if (node.level >= 1){
@@ -35,6 +34,10 @@ export default {
         return [];
       }
     },
+    passNodeData(data,node){
+      this.$bus.$emit('snedTreeData',data)
+    },
+
   },
 };
 </script>
