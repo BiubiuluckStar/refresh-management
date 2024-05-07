@@ -48,6 +48,8 @@
           style="width: 100%"
           :header-cell-style="{ textAlign: 'center' }"
           :cell-style="{ textAlign: 'center' }"
+          @select="selectHandler"
+          @select-all="selectHandler"
         >
           <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column
@@ -142,6 +144,10 @@ export default {
   methods: {
     dayjs,
     removeHTMLTag,
+    // 点击勾选选择框
+    selectHandler(selection){
+console.log(selection);
+    },
     onSubmit() {
       this.search(this.formInline.ProductName);
     },
@@ -206,7 +212,7 @@ export default {
       try {
       await this.$store.dispatch('product/getDelProduct',{id:row.id})
       if(this.productList.total % this.productList.pageSize ){
-        this.currentPage =this.currentPage - 1 > 0 ? this.currentPage :1
+        this.currentPage =this.currentPage - 1 > 0 ? this.currentPage-1 :1
         this.getData(this.currentPage)
       }
       this.getData(this.currentPage)

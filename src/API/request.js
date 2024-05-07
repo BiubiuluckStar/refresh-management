@@ -22,7 +22,7 @@ requests.interceptors.request.use((config)=>{
   return config;
 });
 // 响应拦截器
-requests.interceptors.response.use((res,err)=>{
+requests.interceptors.response.use((res,error)=>{
   // 进度条结束
   nprogress.done()
   // 成功的回调函数，服务器响应相应数据回来以后，相应拦截器就可以检测到，可以做一些事情

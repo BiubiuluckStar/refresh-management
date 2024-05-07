@@ -312,11 +312,11 @@ router.post('/batchUpload', upload.single('file'), function (req, res, next) {
   var price = req.query.price || "";
   var num = req.query.num || "";
   var descs = req.query.descs || "";
-  var paramsInfo = req.query.paramsInfo || "";
+  // var paramsInfo = req.query.paramsInfo || "";
   var image = req.query.image || "";
 
-  const sql = "insert into project(title, image, sellPoint, price, cid, category, num, descs, paramsInfo) values (?,?,?,?,?,?,?,?,?)"
-  var arr = [title, image, sellPoint, price, cid, category, num, descs, paramsInfo];
+  const sql = "insert into project(title, image, sellPoint, price, cid, category, num, descs) values (?,?,?,?,?,?,?,?)"
+  var arr = [title, image, sellPoint, price, cid, category, num, descs];
   sqlFn(sql, arr, result => {
       if (result.affectedRows > 0) {
           res.send({

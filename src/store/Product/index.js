@@ -1,4 +1,4 @@
-import { reqProjectList, reqSearchList,deleteProduct,reqProductCategory } from '@/API'
+import { reqProjectList, reqSearchList,deleteProduct,reqAddProduct } from '@/API'
 const actions = {
   // 商品列表
   async getProductList({ commit }, page) {
@@ -28,7 +28,17 @@ const actions = {
     return Promise.reject(Error('faile'))
   }
   },
-
+  // 添加商品
+  async getAddProduct({commit},params){
+    let result = reqAddProduct(params)
+    console.log(result);
+    if( result.status == 200) {
+      return 'ok' 
+    }
+    else{
+      return Promise.reject(Error('faile'))
+    }
+  }
 
 }
 const mutations = {

@@ -23,22 +23,22 @@
           <span>{{ ruleForm.category }}</span>
           </el-form-item>
           <el-form-item label="商品名称" prop="title">
-            <el-input v-model="ruleForm.title"></el-input>
+            <el-input v-model="ruleForm.title" size = "small"></el-input>
           </el-form-item>
           <el-form-item label="商品价格" prop="price">
-            <el-input v-model="ruleForm.price"></el-input>
+            <el-input v-model="ruleForm.price"  size = "small"></el-input>
           </el-form-item>
           <el-form-item label="商品数量" prop="num">
-            <el-input v-model="ruleForm.num"></el-input>
+            <el-input v-model="ruleForm.num"  size = "small"></el-input>
           </el-form-item>
           <el-form-item label="商品卖点" prop="sellPoint">
-            <el-input v-model="ruleForm.sellPoint"></el-input>
+            <el-input v-model="ruleForm.sellPoint"  size = "small"></el-input>
           </el-form-item>
           <el-form-item label="上传图片" prop="image">
          <UpdatedImage />
           </el-form-item>
           <el-form-item label="商品描述" prop="descs">
-            
+            <WangEditor />
           </el-form-item>
           <el-form-item label="首页轮播推进" prop="isShow">
            <el-switch v-model="ruleForm.isShow" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
@@ -64,18 +64,21 @@
 </template>
 
 <script>
-import TreeProduct from "../TreeProduct";
-import UpdatedImage from "../UpdatedImage";
+import TreeProduct from "./TreeProduct";
+import UpdatedImage from "./UpdatedImage";
+import WangEditor   from './WangEditor'
 
 export default {
   name: "AboutProuct",
   mounted(){
   this.$bus.$on('snedTreeData',this.getTreeData),
-  this.$bus.$on('sendImgUrl',this.receiveImgUrl)
+  this.$bus.$on('sendImgUrl',this.receiveImgUrl),
+  this.$bus.$on('sendDescMsg',this.receiveDescMsg)
   },
   components: {
     TreeProduct,
     UpdatedImage,
+    WangEditor
   },
   data() {
       return {
@@ -112,7 +115,9 @@ export default {
         // this.$refs.ruleForm 然后进行表单验证
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            let { title,num, price,sellPoint,image,descs,category,cid} = this.ruleForm
+            // 将image数组转字符串
+          this.addProductData({title,num, price,sellPoint,image:JSON.stringify(image),descs,category,cid})
           } else {
             console.log('error submit!!');
             return false;
@@ -123,13 +128,22 @@ export default {
         this.$refs[formName].resetFields();
       },
       getTreeData(val){
-       this.ruleForm.category = val.name
+       this.ruleForm.category = val.name;
+       this.ruleForm.cid = val.cid
       },
       receiveImgUrl(val){
      this.ruleForm.image.push(val)
     //  console.log(this.ruleForm.image);
+      },
+      receiveDescMsg(val){
+      this.ruleForm.descs =  val
+      },
+      // 添加商品
+    async addProductData(params) {
+              let res =  await this.$API.reqAddProduct(params)
+              console.log(res);
     }
-    }
+  }
 };
 </script>
 <!-- rgb(213, 221, 224) -->
@@ -149,7 +163,7 @@ export default {
   }
 }
 .wrapper {
-  height: 800px;
+  // height: 800px;
   background-color: #f4f4f4;
   .title2 {
     background-color:#ddd9d9 ;

@@ -55,3 +55,12 @@ label	指定节点标签为节点对象的某个属性值	string, function(data,
 children	指定子树为节点对象的某个属性值	string	—	—
 disabled	指定节点选择框是否禁用为节点对象的某个属性值	boolean, function(data, node)	—	—
 isLeaf	指定节点是否为叶子节点，仅在指定了 lazy 属性的情况下生效	boolean, function(data, node)
+## 图片回显
+## 富文本编译器
+1. wangEditor富文本编译器
+2. 使用
+2.1 安装  npm install @wangeditor/editor --save
+npm install @wangeditor/editor-for-vue --save
+2.2 模板语法
+2.3 js代码
+2.4引入css样式
