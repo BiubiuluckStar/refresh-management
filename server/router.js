@@ -353,7 +353,7 @@ router.post('/batchUpload', upload.single('file'), function (req, res, next) {
   var num = req.query.num || "";
   var desc = req.query.descs || "";
   var paramsInfo = req.query.paramsInfo || "";
-  var image = req.query.image || "[]";
+  var image = req.query.image || "";
   var sql = "update project set title=?,sellPoint=?,price=?,cid=?,category=?,num=?,descs=?,paramsInfo=?,image=? where id=?";
   var arr = [title, sellPoint, price, cid, category, num, desc, paramsInfo, image, id];
   sqlFn(sql, arr, result => {

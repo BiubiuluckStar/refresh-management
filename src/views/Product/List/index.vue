@@ -63,7 +63,7 @@
             width="130"
           >
           <template slot-scope="scope">
-              <span style="color:blue" @click="handleLook(scope,$index,scope.row)">{{ scope.row.title}}</span>
+              <span class="productName" @click="handleLook(scope.$index, scope.row)">{{ scope.row.title}}</span>
             </template>
         </el-table-column>
           <el-table-column
@@ -150,6 +150,11 @@ export default {
     dayjs,
     removeHTMLTag,
     ...mapMutations('product',['changeEditorData','changeTitle']),
+    // 查看商品详情
+    handleLook(index,row){
+      this.$router.push('/product/aboutProduct')
+      this.changeTitle('详情')
+    },
     // 点击勾选选择框得到id数组
     selectHandler(selection){
      let arr = []
@@ -301,6 +306,10 @@ export default {
 </script>
 
 <style lang="less",scoped>
+.productName{
+  color:blue;
+  cursor: pointer;
+}
 .header {
   background-color: #fff;
   margin-bottom: 20px;

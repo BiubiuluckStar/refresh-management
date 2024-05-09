@@ -50,11 +50,11 @@
           <el-switch v-model="ruleForm.isShow" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')"
+            <el-button type="primary" @click="submitForm('ruleForm')" v-show="title != '详情'"
               >提交</el-button
             >
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
-            <el-button @click="resetForm('ruleForm')">取消</el-button>
+            <el-button @click="resetForm('ruleForm')" v-show="title != '详情'">重置</el-button>
+            <el-button @click="backPage">取消</el-button>
 
           </el-form-item>
         </el-form>
@@ -107,10 +107,9 @@ export default {
   this.$bus.$on('sendImgUrl',this.receiveImgUrl),
   this.$bus.$on('sendDescMsg',this.receiveDescMsg)
   // 判断只有点击编辑的时候才赋值
-  if(this.title == '编辑'){
+  if(this.title == '编辑' || this.title == '详情' ){
     this.ruleForm = this.rowData
     this.ruleForm.isShow = true
-
     // 图片的回显
     let imgurl = this.rowData.image //字符串类型
     // 字符串转数组
@@ -143,7 +142,6 @@ export default {
           this.addProductData(
             {title,num, price,sellPoint,descs,category,cid, image:JSON.stringify(image)})
           console.log(this.ruleForm);
-
             }
             else{
             this.getUpdatedProduct( {id,title,num, price,sellPoint,descs,category,cid, image:JSON.stringify(image) })
@@ -163,6 +161,12 @@ export default {
         this.$refs.upload.clearImage()
         // 清除富文本编译器
         this.$refs.editor.clearEditor()
+      },
+      // 取消
+      backPage(){
+         this.$router.push({
+          name:'list'
+        })
       },
       getTreeData(val){
        this.ruleForm.category = val.name;
@@ -203,6 +207,7 @@ export default {
           name:'list'
         })
     } catch (error) {
+      this.$message.error('编辑失败');
       console.warn(error);
     }
     }
