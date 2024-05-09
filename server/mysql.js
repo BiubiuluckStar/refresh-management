@@ -6,7 +6,7 @@ const client = mysql.createConnection({
     host: '127.0.0.1', //数据域名 地址
     user: 'root', //数据名称
     password: '123456', //数据库密码 xampp集成
-    database: 'shangxian',
+    database: 'shengxian',
 })
 
 //封装数据库操作语句 sql语句 参数数组arr  callback成功函数结果

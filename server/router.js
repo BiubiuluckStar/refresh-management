@@ -15,6 +15,7 @@ const vipLogin = require("./login/data/vip_login.json");
 const adminLogin = require("./login/data/admin_login.json");
 const adminPermission = require("./login/data/admin_permission.json");
 const vipPermission = require("./login/data/vip_permission.json");
+const { log } = require("console");
 
 //登录-分权限 1. 超级管理员 admin   2. 其他账号 vip账号 3.
 router.post("/login", (req, res) => {
@@ -268,10 +269,10 @@ var upload = multer({
 //上传图片
 router.post("/upload", upload.single("file"), function (req, res, next) {
   var file = req.file;
-  console.log("文件类型：%s", file.mimetype);
-  console.log("原始文件名：%s", file.originalname);
-  console.log("文件大小：%s", file.size);
-  console.log("文件保存路径：%s", file.path);
+  // console.log("文件类型：%s", file.mimetype);
+  // console.log("原始文件名：%s", file.originalname);
+  // console.log("文件大小：%s", file.size);
+  // console.log("文件保存路径：%s", file.path);
   res.json({
     res_code: "0",
     name: file.originalname,
@@ -281,10 +282,10 @@ router.post("/upload", upload.single("file"), function (req, res, next) {
 //富文本接口图片地址 file
 router.post('/batchUpload', upload.single('file'), function (req, res, next) {
   var file = req.file;
-  console.log('文件类型：%s', file.mimetype);
-  console.log('原始文件名：%s', file.originalname);
-  console.log('文件大小：%s', file.size);
-  console.log('文件保存路径：%s', file.path);
+  // console.log('文件类型：%s', file.mimetype);
+  // console.log('原始文件名：%s', file.originalname);
+  // console.log('文件大小：%s', file.size);
+  // console.log('文件保存路径：%s', file.path);
   res.json({
       res_code: '0',
       name: file.originalname,
@@ -312,11 +313,13 @@ router.post('/batchUpload', upload.single('file'), function (req, res, next) {
   var price = req.query.price || "";
   var num = req.query.num || "";
   var descs = req.query.descs || "";
-  // var paramsInfo = req.query.paramsInfo || "";
-  var image = req.query.image || "";
+  var paramsInfo = req.query.paramsInfo || "";
+  var image = req.query.image || "[]";
 
-  const sql = "insert into project(title, image, sellPoint, price, cid, category, num, descs) values (?,?,?,?,?,?,?,?)"
-  var arr = [title, image, sellPoint, price, cid, category, num, descs];
+  const sql = "insert into project(title, image, sellPoint, price, cid, category, num, descs,paramsInfo) values (?,?,?,?,?,?,?,?,?)"
+  var arr = [title, image, sellPoint, price, cid, category, num, descs,paramsInfo];
+  console.log(arr);
+
   sqlFn(sql, arr, result => {
       if (result.affectedRows > 0) {
           res.send({
@@ -350,7 +353,7 @@ router.post('/batchUpload', upload.single('file'), function (req, res, next) {
   var num = req.query.num || "";
   var desc = req.query.descs || "";
   var paramsInfo = req.query.paramsInfo || "";
-  var image = req.query.image || "";
+  var image = req.query.image || "[]";
   var sql = "update project set title=?,sellPoint=?,price=?,cid=?,category=?,num=?,descs=?,paramsInfo=?,image=? where id=?";
   var arr = [title, sellPoint, price, cid, category, num, desc, paramsInfo, image, id];
   sqlFn(sql, arr, result => {
@@ -374,7 +377,7 @@ router.post('/batchUpload', upload.single('file'), function (req, res, next) {
  * sql = "delete from A where id in (1,2,3)"  
  * 接受 参数 字符串  （数组转字符串）
  */
- router.get("/goods/batchDelete", (req, res) => {
+router.get("/goods/batchDelete", (req, res) => {
   let ids = req.query.ids; //
   const sql =`delete from project where id in (${ids})`;
 

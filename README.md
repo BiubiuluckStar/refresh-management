@@ -56,6 +56,7 @@ children	指定子树为节点对象的某个属性值	string	—	—
 disabled	指定节点选择框是否禁用为节点对象的某个属性值	boolean, function(data, node)	—	—
 isLeaf	指定节点是否为叶子节点，仅在指定了 lazy 属性的情况下生效	boolean, function(data, node)
 ## 图片回显
+
 ## 富文本编译器
 1. wangEditor富文本编译器
 2. 使用
@@ -64,3 +65,8 @@ npm install @wangeditor/editor-for-vue --save
 2.2 模板语法
 2.3 js代码
 2.4引入css样式
+
+## vuex对于编辑页面的持久化存储
+## 商品编辑与添加携带不同的参数向mutations发请求，改变数值，然后在页面挂载的时候通过title判断是添加还是修改，若是修改将仓库中的值赋给data中的变量，然后进行图片回显，遍历图片回显，接着进行富文本编译器回显
+商品保存功能，通过标题判断是添加还是修改，向服务器传递不同的参数
+## 不足：当编辑商品的时候添加图片不改变，编辑之后进行添加操作，富文本编译器中的内容还是一直存在

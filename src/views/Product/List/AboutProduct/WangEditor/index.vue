@@ -13,6 +13,7 @@
       :mode="mode"
       @onCreated="onCreated"
       @onChange="onChange"
+      ref="editor"
     />
   </div>
 </template>
@@ -22,6 +23,7 @@ import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import "@wangeditor/editor/dist/css/style.css";
 export default {
   name: "WangEditor",
+  props:['descs'],
   components: {
     Editor,
     Toolbar,
@@ -29,7 +31,7 @@ export default {
   data() {
     return {
       editor: null,
-      html: "",
+      html: this.descs || '',
       toolbarConfig: { //菜单栏的配置
         //toolbarKeys-重新配置工具栏，显示哪些菜单，以及菜单的排序、分组
         toolbarKeys: [
@@ -66,8 +68,10 @@ export default {
     onChange() {
       // 将编辑器中的商品描述数据发送给父组件
       this.$bus.$emit("sendDescMsg", this.html);
-      // console.log('你被监听了',this.html);
     },
+    clearEditor(){
+      this.editor.clear()
+    }
   },
   mounted() {},
   beforeDestroy() {

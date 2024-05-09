@@ -34,7 +34,7 @@
           <el-button class="buttonOne" type="warning" icon="el-icon-plus"
             @click="aboutProduct">添加商品</el-button
           >
-          <el-button class="buttonTwo" type="danger" icon="el-icon-delete"
+          <el-button class="buttonTwo" type="danger" icon="el-icon-delete" @click="deleteAll"
             >批量删除</el-button
           >
         </div>
@@ -61,7 +61,11 @@
             prop="title"
             label="商品名称"
             width="130"
-          ></el-table-column>
+          >
+          <template slot-scope="scope">
+              <span style="color:blue" @click="handleLook(scope,$index,scope.row)">{{ scope.row.title}}</span>
+            </template>
+        </el-table-column>
           <el-table-column
             prop="price"
             label="商品价格"
@@ -118,7 +122,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import dayjs from "dayjs";
 import { removeHTMLTag } from "@/utils";
 export default {
@@ -139,21 +143,33 @@ export default {
       tableData: [],
       currentPage: 1,
       params: { search: "" },
+      ids:[]  //存储选中的id
     };
   },
   methods: {
     dayjs,
     removeHTMLTag,
-    // 点击勾选选择框
+    ...mapMutations('product',['changeEditorData','changeTitle']),
+    // 点击勾选选择框得到id数组
     selectHandler(selection){
-console.log(selection);
+     let arr = []
+     selection.forEach(item => {
+      arr.push(item.id)
+     });
+     this.ids = arr
     },
     onSubmit() {
       this.search(this.formInline.ProductName);
     },
+    // 编辑
     handleEdit(index, row) {
-      console.log(index, row);
-      console.log(this.productList.total % this.productList.pageSize);
+      // 存储当前行的数据跳转到另一个页面
+      this.changeEditorData(row)
+      this.changeTitle('编辑')
+      // 跳转编辑页面
+      this.$router.push({
+        name:'aboutProduct'
+      })
     },
     handleDelete( row) {
     this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -177,11 +193,7 @@ console.log(selection);
     async getData(page) {
       try {
         await this.$store.dispatch("product/getProductList", { page });
-        sessionStorage.setItem(
-          "productList",
-          JSON.stringify(this.productList.data)
-        );
-        this.tableData = JSON.parse(sessionStorage.getItem("productList"));
+        this.tableData = this.productList.data
       } catch (error) {
         console.warn(error);
       }
@@ -201,10 +213,34 @@ console.log(selection);
         await this.$store.dispatch("product/getSearchList", {
           search: this.formInline.ProductName,
         });
-        sessionStorage.setItem("searchList", JSON.stringify(this.searchList));
-        this.tableData = JSON.parse(sessionStorage.getItem("searchList"));
+        this.tableData = this.searchList
       } catch (error) {
         this.tableData = [];
+      }
+    },
+    // 请求批量删除
+    async deleteAllGoods(ids) {
+      try {
+       await this.$store.dispatch('product/getDeleProduct',{ids})
+       this.$message({
+          message: '删除成功',
+          type: 'success'
+        });
+        // 重新渲染视图，如果是在最后一页删除的时候，删除的长度与页的长度相同，则回到前面一页，其余不变
+      // 获取选中的个数
+      let len = this.ids.length
+      // 获取当前是否是最后一页,向上取整
+      let maxPage = Math.ceil(this.productList.total / this.productList.pageSize)
+      // 最后一页数据长度
+      let lastLen = this.productList.total % this.productList.pageSize == 0 ? this.pageSize :this.productList.total % this.productList.pageSize
+      // 判断数据是不是最后一页的数据，若是再比较选中的个数与当前最后一页的条数是否相同，若相同，向前一页渲染
+      if( maxPage == this.currentPage && len == lastLen){
+        this.currentPage = this.currentPage-1 >0 ? this.currentPage-1 : 1
+      }
+        this.getData(this.currentPage)
+      } catch (error) {
+        console.warn(error);
+        this.$message.error('删除失败');
       }
     },
     // 删除单个商品
@@ -220,11 +256,47 @@ console.log(selection);
         console.warn(error);
       }
     },
-    // 修改/新增商品
+    // 添加商品
     aboutProduct(){
       this.$router.push('/product/aboutProduct')
-    }
+      this.changeTitle('添加')
+    },
+    // 批量删除
+  //     deleteAll(){
+  //     this.$confirm('此操作将永久删除该商品, 是否继续?', '提示', {
+  //       confirmButtonText: '确定',
+  //       cancelButtonText: '取消',
+  //       type: 'warning'
+  //     }).then(() => {
+  //       console.log('批量删除商品---------', this.ids);
+  //       //执行删除操作----------------------------
+  //       let idStr = this.ids.join(',');
+  //       console.log('----ids----', idStr);
+  //       this.deleteAllGoods(idStr)
+
+  //     }).catch(() => {
+  //       this.$message({
+  //         type: 'info',
+  //         message: '已取消删除'
+  //       });
+  //   })
+  // },
+    deleteAll(){
+      this.$confirm('此操作将永久删除该商品, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {   //成功执行函数
+        let ids = this.ids.join(',');
+        this.deleteAllGoods(ids)
+      }).catch(() => {  //失败回调函数
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
   },
+}
 };
 </script>
 

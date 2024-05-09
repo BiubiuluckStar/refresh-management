@@ -10,7 +10,7 @@
     </el-col>
     <el-col :span="20">
       <div class="wrapper">
-        <div class="title2">商品添加</div>
+        <div class="title2">商品{{ title }}</div>
         <el-form
           :model="ruleForm"
           :rules="rules"
@@ -35,10 +35,10 @@
             <el-input v-model="ruleForm.sellPoint"  size = "small"></el-input>
           </el-form-item>
           <el-form-item label="上传图片" prop="image">
-         <UpdatedImage />
+         <UpdatedImage :fileList="fileList" ref="upload" />
           </el-form-item>
           <el-form-item label="商品描述" prop="descs">
-            <WangEditor />
+            <WangEditor :descs="rowData.descs" ref="editor"/>
           </el-form-item>
           <el-form-item label="首页轮播推进" prop="isShow">
            <el-switch v-model="ruleForm.isShow" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
@@ -51,7 +51,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')"
-              >保存</el-button
+              >提交</el-button
             >
             <el-button @click="resetForm('ruleForm')">重置</el-button>
             <el-button @click="resetForm('ruleForm')">取消</el-button>
@@ -64,25 +64,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import TreeProduct from "./TreeProduct";
 import UpdatedImage from "./UpdatedImage";
 import WangEditor   from './WangEditor'
 
 export default {
   name: "AboutProuct",
-  mounted(){
-  this.$bus.$on('snedTreeData',this.getTreeData),
-  this.$bus.$on('sendImgUrl',this.receiveImgUrl),
-  this.$bus.$on('sendDescMsg',this.receiveDescMsg)
-  },
-  components: {
-    TreeProduct,
-    UpdatedImage,
-    WangEditor
-  },
   data() {
       return {
+        fileList:[],  //存储图片回显
         ruleForm: {
+          id:'',
          title:'',
          num:'',
          price:'',
@@ -109,23 +102,67 @@ export default {
         }
       };
     },
+  mounted(){
+  this.$bus.$on('sendTreeData',this.getTreeData),
+  this.$bus.$on('sendImgUrl',this.receiveImgUrl),
+  this.$bus.$on('sendDescMsg',this.receiveDescMsg)
+  // 判断只有点击编辑的时候才赋值
+  if(this.title == '编辑'){
+    this.ruleForm = this.rowData
+    this.ruleForm.isShow = true
+
+    // 图片的回显
+    let imgurl = this.rowData.image //字符串类型
+    // 字符串转数组
+    let arrImage = JSON.parse(imgurl)
+    this.ruleForm.image = arrImage
+    console.log(this.ruleForm);
+    arrImage.forEach(item => {
+      this.fileList.push({name:'',url:item})
+    });
+  }
+  },
+  components: {
+    TreeProduct,
+    UpdatedImage,
+    WangEditor
+  },
+    computed:{
+    ...mapState('product',['rowData','title'])
+    },
     methods: {
-      // 默认提交事件
+      // 提交商品事件
       submitForm(formName) {
         // this.$refs.ruleForm 然后进行表单验证
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            let { title,num, price,sellPoint,image,descs,category,cid} = this.ruleForm
+            let {id, title,num, price,sellPoint,image,descs,category,cid} = this.ruleForm
+            console.log(typeof(image));
+            if(this.title =='添加'){
             // 将image数组转字符串
-          this.addProductData({title,num, price,sellPoint,image:JSON.stringify(image),descs,category,cid})
+          this.addProductData(
+            {title,num, price,sellPoint,descs,category,cid, image:JSON.stringify(image)})
+          console.log(this.ruleForm);
+
+            }
+            else{
+            this.getUpdatedProduct( {id,title,num, price,sellPoint,descs,category,cid, image:JSON.stringify(image) })
+            console.log(this.ruleForm);
+            }
+  
           } else {
             console.log('error submit!!');
             return false;
           }
         });
       },
+      // 重置
       resetForm(formName) {
         this.$refs[formName].resetFields();
+        // 清除图片列表
+        this.$refs.upload.clearImage()
+        // 清除富文本编译器
+        this.$refs.editor.clearEditor()
       },
       getTreeData(val){
        this.ruleForm.category = val.name;
@@ -133,15 +170,33 @@ export default {
       },
       receiveImgUrl(val){
      this.ruleForm.image.push(val)
-    //  console.log(this.ruleForm.image);
       },
       receiveDescMsg(val){
       this.ruleForm.descs =  val
       },
       // 添加商品
     async addProductData(params) {
-              let res =  await this.$API.reqAddProduct(params)
-              console.log(res);
+       try {
+        await this.$store.dispatch('product/getAddProduct',params)
+        this.$message({
+          message: '添加成功',
+          type: 'success'
+        });
+        // 跳转路由
+        this.$router.push({
+          name:'list'
+        })
+       } catch (error) {
+        console.warn(error);
+       }
+    },
+    // 修改商品
+    async getUpdatedProduct(params){
+    try {
+      await this.$store.dispatch('product/getUpdatedProduct',params)
+    } catch (error) {
+      console.warn(error);
+    }
     }
   }
 };

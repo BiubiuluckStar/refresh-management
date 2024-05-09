@@ -18,7 +18,7 @@ export default {
     async loadNode(node, resolve) {
       if (node.level === 0) {
         let result = await this.getDataTree(1);
-        return resolve(result.splice(0, 6));
+        return resolve(result.splice(0, 5));
       }
       if (node.level >= 1){
         let result = await this.getDataTree(node.data.cid);
@@ -35,9 +35,8 @@ export default {
       }
     },
     passNodeData(data,node){
-      this.$bus.$emit('snedTreeData',data)
+      this.$bus.$emit('sendTreeData',data)
     },
-
   },
 };
 </script>

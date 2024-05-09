@@ -22,8 +22,14 @@ export const deleteProduct = (params)=>requests.get('/goods/deleteItemById',{par
 // 商品类目 params:{type:cid}
 export const reqProductCategory = (params)=>requests.get('/goods/itemCategory/selectItemCategoryByParentId',{params})
 
-// 添加商品 params = {}
+// 添加商品 params：{}
 export const reqAddProduct = (params)=>requests.get('/goods/item/insertTbItem',{params})
+
+// 批量删除{ids:字符串}
+export const reqDeleteCheckedAll = (params)=>requests.get('/goods/batchDelete',{params})
+
+// 修改商品 id, title cid  category sellPoint price num descs paramsInfo image
+export const reqUpdatedProduct = (params)=>requests.get('/goods/item/updateTbItem',{params})
 
 
 // 导出图片上传的地址

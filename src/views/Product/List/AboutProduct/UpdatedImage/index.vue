@@ -7,6 +7,8 @@
       :on-remove="handleRemove"
       :on-success="handleSuccess"
       multiple
+      :file-list="fileList"
+      ref="upload"
     >
       <i class="el-icon-plus"></i>
     </el-upload>
@@ -20,6 +22,7 @@
 <script>
 import {reqUploadImage,host} from '@/API'
 export default {
+  props:['fileList'],  //存储图片的数组 {name:'',url:''}
   data() {
     return {
       reqUploadImage,
@@ -38,9 +41,13 @@ export default {
     // 上传成功
     handleSuccess(response,file,fileList){
       // 获得图片src的网址
-  let url = response.url.slice(7)
-  let imgUrl = host +'/'+url
-  this.$bus.$emit('sendImgUrl',imgUrl)
+     let url = response.url.slice(7)
+     let imgUrl = host +'/'+url
+     this.$bus.$emit('sendImgUrl',imgUrl)
+    },
+    // 清除
+    clearImage(){
+      this.$refs.upload.clearFiles()
     }
   },
 };
