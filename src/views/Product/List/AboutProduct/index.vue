@@ -194,6 +194,14 @@ export default {
     async getUpdatedProduct(params){
     try {
       await this.$store.dispatch('product/getUpdatedProduct',params)
+      this.$message({
+          message: '添加成功',
+          type: 'success'
+        });
+        // 跳转路由
+        this.$router.push({
+          name:'list'
+        })
     } catch (error) {
       console.warn(error);
     }
