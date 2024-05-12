@@ -31,6 +31,27 @@ export const reqDeleteCheckedAll = (params)=>requests.get('/goods/batchDelete',{
 // 修改商品 id, title cid  category sellPoint price num descs paramsInfo image
 export const reqUpdatedProduct = (params)=>requests.get('/goods/item/updateTbItem',{params})
 
+// 产品一级分类
+export const reqOneCategory = ()=>requests.get('/itemCategory')
+
+// 新增一级分类名称 /itemCategory/insertCategory name
+export const reqAddCategory = (params)=>requests.get('/itemCategory/insertCategory',{params})
+
+// 新增子类分类名称 /itemCategory/insertItemCategory cid name
+export const reqAddChildrenCategory = (params)=>requests.get('/itemCategory/insertItemCategory',{params})
+
+// 修改操作 /itemCategory/updateCategory id name
+export const reqUpdateCategory = (params)=>requests.get('/itemCategory/updateCategory',{params})
+
+//删除操作 /content/deleteContentCategoryById  id
+export const reqDeleteCategory = (params)=>requests.get('/content/deleteContentCategoryById',{params})
+
+// 获取订单列表数据  page
+export const reqOrderList = (params)=>requests.get('/order/list ',{params})
+
+// 订单汇总 ids
+export const reqOrderMaraize = (params)=>requests.get('/order/changeStatust ',{params})
+
 
 // 导出图片上传的地址
 export const reqUploadImage = './api/upload/'

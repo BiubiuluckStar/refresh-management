@@ -32,9 +32,9 @@
         </div>
         <div class="group">
           <el-button class="buttonOne" type="warning" icon="el-icon-plus"
-            @click="aboutProduct">添加商品</el-button
+            @click="aboutProduct" size="small">添加商品</el-button
           >
-          <el-button class="buttonTwo" type="danger" icon="el-icon-delete" @click="deleteAll"
+          <el-button class="buttonTwo" type="danger" size="small" icon="el-icon-delete" @click="deleteAll"
             >批量删除</el-button
           >
         </div>
