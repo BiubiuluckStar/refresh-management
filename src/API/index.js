@@ -47,7 +47,7 @@ export const reqUpdateCategory = (params)=>requests.get('/itemCategory/updateCat
 export const reqDeleteCategory = (params)=>requests.get('/content/deleteContentCategoryById',{params})
 
 // 获取订单列表数据  page
-export const reqOrderList = (params)=>requests.get('/order/list ',{params})
+export const reqOrderList = (params)=>requests.get('/order/list',{params})
 
 // 订单汇总 ids
 export const reqOrderMaraize = (params)=>requests.get('/order/changeStatust ',{params})

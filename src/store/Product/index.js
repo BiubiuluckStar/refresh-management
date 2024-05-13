@@ -8,6 +8,9 @@ const actions = {
       commit('GetProductList', result)
       return 'ok'
     }
+    else{
+      return Promise.reject(Error('faile'))
+    }
   },
   // 商品查询
   async getSearchList({ commit }, params) {

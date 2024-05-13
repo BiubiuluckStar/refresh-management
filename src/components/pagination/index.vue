@@ -15,31 +15,43 @@ import { mapState } from 'vuex';
 
 export default {
   mounted(){
-   this.$store.dispatch('product/getProductList')
-   this.$bus.$emit('changePagination',this.changePagination)
+    if(this.$route.path =='/product/list'){
+      this.$store.dispatch('product/getProductList')
+    }
+    if(this.$route.path =='/order/orderList'){
+      this.$store.dispatch('order/getOrderList')
+    }
   },
   computed:{
-    ...mapState('product',['productList','searchList']),
+    ...mapState('product',['productList']),
     total(){
-      return this.productList.total
+      if(this.$route.path =='/product/list'){
+        return this.productList.total
+      }
+      if(this.$route.path =='/order/orderList'){
+      return this.$store.state.order.orderList.total
+    }
     },
     pageSize(){
-      return this.productList.pageSize
+      if(this.$route.path =='/product/list'){
+        return this.productList.pageSize
+      }
+      if(this.$route.path =='/order/orderList'){
+      return this.$store.state.order.orderList.pageSize
+    }
     }
   },
   methods: {
       handleCurrentChange(val) {
         this.$bus.$emit('receiveCurrentPage',val)
-      },
+      }
     },
     data() {
       return {
-        currentPage: 1
+        currentPage: 1,
       };
     }
 }
 </script>
-
 <style>
-
-</style>
+</style> 

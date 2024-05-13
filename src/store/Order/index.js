@@ -1,8 +1,10 @@
-import { reqOrderList } from  '@/API'
+import {reqOrderList} from '@/API'
 
 const actions={
-  async getOrderList({commit},{params}){
-    let result = await reqOrderList(params)
+  // 获取订单列表
+  async getOrderList({commit},page){
+    console.log('index',page);
+    let result = await reqOrderList(page)
     console.log(result);
     if(result.status == 200){
       commit('GetOrderList',result)

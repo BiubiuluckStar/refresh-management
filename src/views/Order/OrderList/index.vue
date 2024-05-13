@@ -1,7 +1,7 @@
 <template>
   <div class="order">
     <div class="list">
-      <!-- 2. 列表展示 -->
+       2. 列表展示 -->
       <div class='header'>
         <el-row :gutter="20">
           <el-col :span="14">
@@ -52,27 +52,38 @@
     <div class="content">
       <el-table :data="tableData" border style="width: 100%" :header-cell-style="{ background: '#fafafa', color: '#333', textAlgin: 'center' }"
       :cell-style="{textAlgin:'center'}">
-        <el-table-column type="selection" width="55"> </el-table-column>
+        <el-table-column type="selection" width="55" :selectable="selectable"> </el-table-column>
         <el-table-column prop="code" label="订单编号" width="180">
         </el-table-column>
         <el-table-column prop="ordername" label="下单人" width="180">
         </el-table-column>
         <el-table-column prop="company" label="所属单位"> </el-table-column>
         <el-table-column prop="phone" label="联系电话"> </el-table-column>
-        <el-table-column prop="yudingTime" label="预定时间"> </el-table-column>
+        <el-table-column prop="yudingTime" label="预定时间">
+          <template slot-scope="scope">
+              {{ dayjs(scope.row.yudingTime).format('YYYY-MM-DD HH:mm:ss')}} 
+            </template>
+        </el-table-column>
         <el-table-column prop="price" label="订单总价"> </el-table-column>
-        <el-table-column prop="huizongStatus" label="汇总状态"> </el-table-column>
+        <!-- 利用template得到当前行的数据 -->
+        <el-table-column prop="huizongStatus" label="汇总状态">
+          <template slot-scope="scope">
+              {{ scope.row.huizongStatus == 1 ? '未汇总' : '已汇总'}} 
+            </template>
+        </el-table-column>
       </el-table>
     </div>
+    <pagination ></pagination>
   </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
-
+import pagination from '@/components/pagination'
+import dayjs from "dayjs";
 export default {
   name: "OrderList",
+	components: { pagination },
   data() {
     return {
       formInline: {
@@ -80,11 +91,11 @@ export default {
         date: "",
       },
       tableData: [],
-
     };
   },
   mounted(){
-    this.orderListData(1)
+    this.orderListData()
+    this.$bus.$on("receiveCurrentPage", this.getPagination);
   },
   computed:{
     orderList(){
@@ -92,21 +103,33 @@ export default {
   }
   },
   methods:{
+    dayjs,
+    // 通过汇总状态控制多选框的禁用
+    selectable(row,index){
+    if(row.huizongStatus == 2){
+      return false
+    }
+    return true
+    },
     // 获取订单列表数据
     async orderListData(page){
+      console.log(page);
       try {
-     await this.$store.dispatch('order/getOrderList',{page})
-     console.log(this.orderList);
-        this.tableData = this.orderList
+       await this.$store.dispatch('order/getOrderList',{page})
+       this.tableData = this.orderList
       } catch (error) {
         console.warn(error);
       }
-    }
+    },
+    // 获取分页器--当前页码
+    getPagination(val) {
+      this.orderListData(val);
+    },
   }
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less" scoped> -->
 .header-btn {
   margin-top: 10px;
   margin-bottom: 10px;

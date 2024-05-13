@@ -143,7 +143,7 @@ export default {
       tableData: [],
       currentPage: 1,
       params: { search: "" },
-      ids:[]  //存储选中的id
+      ids:[] , //存储选中的id
     };
   },
   methods: {
@@ -197,12 +197,13 @@ export default {
     // 产品列表
     async getData(page) {
       try {
-        await this.$store.dispatch("product/getProductList", { page });
+        await this.$store.dispatch("product/getProductList", {page});
         this.tableData = this.productList.data
       } catch (error) {
         console.warn(error);
       }
     },
+    // 分页器--当前页
     getPagination(page) {
       this.currentPage = page;
       this.getData(page);
