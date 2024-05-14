@@ -19,7 +19,10 @@ export default {
       this.$store.dispatch('product/getProductList')
     }
     if(this.$route.path =='/order/orderList'){
-      this.$store.dispatch('order/getOrderList')
+      this.$store.dispatch('order/getOrderList',1)
+    }
+    if(this.$route.path =='/order/summaryList'){
+      return this.$store.dispatch('order/getCollectList',1)
     }
   },
   computed:{
@@ -30,6 +33,9 @@ export default {
       }
       if(this.$route.path =='/order/orderList'){
       return this.$store.state.order.orderList.total
+      }
+      if(this.$route.path =='/order/summaryList'){
+      return this.$store.state.order.collectList.total
     }
     },
     pageSize(){
@@ -38,7 +44,10 @@ export default {
       }
       if(this.$route.path =='/order/orderList'){
       return this.$store.state.order.orderList.pageSize
-    }
+      }
+      if(this.$route.path =='/order/summaryList'){
+      return this.$store.state.order.collectList.pageSize
+      }
     }
   },
   methods: {

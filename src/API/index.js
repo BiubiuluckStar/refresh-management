@@ -49,9 +49,14 @@ export const reqDeleteCategory = (params)=>requests.get('/content/deleteContentC
 // 获取订单列表数据  page
 export const reqOrderList = (params)=>requests.get('/order/list',{params})
 
-// 订单汇总 ids
-export const reqOrderMaraize = (params)=>requests.get('/order/changeStatust ',{params})
+//汇总清单  page
+export const reqCollectList = (params)=>requests.get('/order/collect',{params})
 
+// 订单汇总 ids 字符串
+export const reqOrderMaraize = (params)=>requests.get('/order/changeStatus',{params})
+
+// 撤销汇总/cancel id
+export const reqCollectCancel = (params)=>requests.get('/order/cancel',{params})
 
 // 导出图片上传的地址
 export const reqUploadImage = './api/upload/'
