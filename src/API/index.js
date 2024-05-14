@@ -58,6 +58,9 @@ export const reqOrderMaraize = (params)=>requests.get('/order/changeStatus',{par
 // 撤销汇总/cancel id
 export const reqCollectCancel = (params)=>requests.get('/order/cancel',{params})
 
+// 订单详情/list/detail
+export const reqOrderDetail = (params)=>requests.get('/order/list/detail',{params})
+
 // 导出图片上传的地址
 export const reqUploadImage = './api/upload/'
 //公共接口

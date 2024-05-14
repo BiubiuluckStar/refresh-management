@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import {
+  Drawer,
   Pagination,
   Dialog,
   Autocomplete,
@@ -79,6 +80,7 @@ import {
   Notification
 } from 'element-ui';
 
+Vue.use(Drawer);
 Vue.use(Pagination);
 Vue.use(Dialog);
 Vue.use(Autocomplete);

@@ -94,6 +94,9 @@
           <el-table-column type="selection" width="55" :selectable="selectable">
           </el-table-column>
           <el-table-column prop="code" label="订单编号" width="180">
+            <template slot-scope="scope">
+              <span class="productName" @click="handleLook(scope.$index, scope.row)">{{ scope.row.code}}</span>
+            </template>
           </el-table-column>
           <el-table-column prop="ordername" label="下单人" width="180">
           </el-table-column>
@@ -113,30 +116,40 @@
           </el-table-column>
         </el-table>
       </div>
+      <!-- 分页 -->
       <pagination></pagination>
     </div>
+    <!-- 抽屉 -->
+    <el-drawer title="订单详情" :visible.sync="drawer" :direction="direction" :size="size" :modal="false">
+        <Drawer></Drawer>
+      </el-drawer>
   </div>
 </template>
 
 <script>
 import pagination from "@/components/pagination";
+import Drawer from './Drawer'
 import dayjs from "dayjs";
 export default {
   name: "OrderList",
-  components: { pagination },
+  components: { pagination,Drawer },
   data() {
     return {
       formInline: {
         ProductName: "",
         date: "",
       },
+      title:"采购订单表格",
+      drawer: false,
+      size: '',
+      direction: 'rtl',
       tableData: [],
       ids: [], //存储汇总的id
     };
   },
   mounted() {
     this.orderListData();
-    this.$bus.$on("receiveCurrentPage", this.getPagination);
+    this.$bus.$on("receiveCurrentPage", this.getPagination);   
   },
   computed: {
     orderList() {
@@ -154,7 +167,6 @@ export default {
     },
     // 获取订单列表数据
     async orderListData(page) {
-      console.log(page);
       try {
         await this.$store.dispatch("order/getOrderList", { page });
         this.tableData = this.orderList;
@@ -198,7 +210,6 @@ export default {
           });
           this.orderList.huizongStatus == 2;
           this.orderListData();
-         
         } catch (error) {
           this.$message({
             type: "info",
@@ -218,12 +229,22 @@ export default {
         });
       }
     },
+    // 查看订单详情
+    handleLook(){
+    // 得出抽屉弹出应有的宽度
+    let content =document.querySelector('.header').clientWidth
+    this.size = content
+    this.drawer = true
+    }
   },
 };
 </script>
 
 <style lang="less" scoped>
--- > .header-btn {
+.productName{
+  color:blue
+}
+.header-btn {
   margin-top: 10px;
   margin-bottom: 10px;
   border: 1px solid #eee;

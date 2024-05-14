@@ -1,11 +1,9 @@
-import {reqOrderList,reqCollectList,reqOrderMaraize,reqCollectCancel} from '@/API'
+import {reqOrderList,reqCollectList,reqOrderMaraize,reqCollectCancel,reqOrderDetail} from '@/API'
 
 const actions={
   // 获取订单列表
   async getOrderList({commit},{page}){
-    // console.log('index',page);
     let result = await reqOrderList({page})
-    console.log(result);
     if(result.status == 200){
       commit('GetOrderList',result)
       return 'ok'
@@ -37,6 +35,7 @@ async getCollectList({commit},{page}){
   return Promise.reject(Error('faile'))
  }
 },
+// 取消汇总
 async getCollectCancel({commit},id){
  let result = await reqCollectCancel(id)
  console.log(result);
@@ -46,6 +45,17 @@ async getCollectCancel({commit},id){
  else{
   return Promise.reject(Error('faile'))
  }
+},
+// 订单详情
+ async getOrderDetail({commit},params){
+  let result = await reqOrderDetail(params)
+  if(result.status == 200){
+    commit('GetOrderDetail',result.result)
+    return 'ok'
+   }
+   else{
+    return Promise.reject(Error('faile'))
+   }
 }
 }
 const mutations={
@@ -54,13 +64,17 @@ const mutations={
   },
   GetCollectList(state,val){
     state.collectList = val
-  }
+  },
+  GetOrderDetail(state,val){
+    state.orderdesc = val
+  },
 }
 const getters={
 }
 const state={
   orderList:[],
-  collectList:[]
+  collectList:[],
+  orderdesc:{}
 }
 export default{
   namespaced:true,
