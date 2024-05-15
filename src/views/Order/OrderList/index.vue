@@ -64,12 +64,12 @@
       <!-- 3. 订单列表按钮 -->
       <div class="header-btn">
         <el-button
-          class="order-btn"
+         class="order-btn"
           type="warning"
           size="small"
-          @click="orderCollection"
-          >订单汇总</el-button
-        >
+          @click="orderCollection">
+         订单汇总
+        </el-button >
           <download-excel 
          style="display:inline-block;margin-left:10px;"
          :data="DetailsForm" 
@@ -77,7 +77,9 @@
          :header="title"
          :name="title">
           <el-button class="order-btn" type="warning" size="small" >导出</el-button>
+          <el-button class="order-btn" type="warning" size="small" @click="downloadAll">全导出</el-button>
         </download-excel>
+
       </div>
       <!-- 表格区域 -->
       <div class="content">
@@ -197,6 +199,7 @@ export default {
     },
     // 选中勾选内容
     select(selection, row) {
+      // 得到选中的id
       let arr = [];
       selection.forEach((item) => {
         arr.push(item.id);
@@ -208,11 +211,6 @@ export default {
       item.yudingTime = dayjs(item.yudingTime).format('YYYY/MM/DD')
      })
      this.DetailsForm = selection 
-    //  selection.forEach(ele=>{
-    //     ele.yudingTime = dayjs(ele.yudingTime).format('YYYY-MM-DD');
-    //     ele.huizongStatus = ele.huizongStatus==1?'未汇总':"已汇总";
-    //   })
-    //   this.DetailsForm = selection
     },
     // 订单汇总 1.获取选择的数据订单 2.提交汇总发请求 3.改变汇总状态为2
     async orderCollection() {
@@ -264,7 +262,21 @@ export default {
     this.size = content
     this.drawer = true
     },
-  },
+    // 全导出
+    downloadAll(){
+      let arr=[]
+    this.tableData.forEach(item=>{
+      item.huizongStatus = 1 ? '未汇总' : '已汇总'
+      item.yudingTime = dayjs(item.yudingTime).format('YYYY/HH/DD')
+      arr.push(item)
+    })
+      setTimeout(()=>{
+      console.log(111);
+      this.orderListData()
+    },0.00001)
+    this.DetailsForm = arr
+    }
+  }
 };
 </script>
 

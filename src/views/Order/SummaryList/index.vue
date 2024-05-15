@@ -63,13 +63,15 @@
       </div>
       <!-- 3. 订单列表按钮 -->
       <div class="header-btn">
-        <download-excel 
-         style="display:inline-block;margin-left:10px;"
-         :data="DetailsForm" 
-         :fields="json_fields" 
-         :header="title"
-         :name="title">
-          <el-button class="order-btn" type="warning" size="small" >导出</el-button>
+        <download-excel
+          style="display: inline-block; margin-left: 10px"
+          :data="DetailsForm"
+          :fields="json_fields"
+          :header="title"
+          :name="title"
+        >
+          <el-button class="order-btn" type="warning" size="small">导出</el-button>
+          <el-button class="order-btn" type="warning" size="small" @click="downloadAll">全导出</el-button>
         </download-excel>
       </div>
       <!-- 表格区域 -->
@@ -130,21 +132,21 @@ export default {
         date: "",
       },
       tableData: [],
-      title:"采购订单",  //导出名称
-      DetailsForm:[], //导出的数据
-      json_fields:{  
-        "汇总单编号":{
-          field:"orderNum",
-          callback:value=>{
-            return '&nbsp;'+value;
-          }
+      title: "采购订单", //导出名称
+      DetailsForm: [], //导出的数据
+      json_fields: {
+        汇总单编号: {
+          field: "orderNum",
+          callback: (value) => {
+            return "&nbsp;" + value;
+          },
         },
-        "汇总单编号":"orderNum",
-        "汇总人":"operator",
-        "联系电话":"phone",
-        "汇总时间":"time",
-        "汇总单总价格":"totalPrice",
-      }
+        汇总单编号: "orderNum",
+        汇总人: "operator",
+        联系电话: "phone",
+        汇总时间: "time",
+        汇总单总价格: "totalPrice",
+      },
     };
   },
   mounted() {
@@ -158,11 +160,11 @@ export default {
   methods: {
     dayjs,
     // 得到选中的行并导出
-    select(selection,row){
-    selection.forEach(item => {
-      item.time = dayjs(item.time).format('YYYY/MM/DD')
-    });
-    this.DetailsForm = selection
+    select(selection, row) {
+      selection.forEach((item) => {
+        item.time = dayjs(item.time).format("YYYY/MM/DD");
+      });
+      this.DetailsForm = selection;
     },
     // 撤销汇总
     async handleEdit(index, row) {
@@ -171,12 +173,14 @@ export default {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning",
-        }).then(() => {
+        })
+          .then(() => {
             this.$message({
               type: "success",
               message: "撤销成功!",
             });
-          }).catch(() => {
+          })
+          .catch(() => {
             this.$message({
               type: "info",
               message: "已取消撤销汇总",
@@ -206,12 +210,26 @@ export default {
     getPagination(val) {
       this.orderListData(val);
     },
+    // 全导出
+    downloadAll() {
+      let arr = [];
+      this.tableData.forEach((item) => {
+        item.huizongStatus = 1 ? "未汇总" : "已汇总";
+        item.yudingTime = dayjs(item.yudingTime).format("YYYY/HH/DD");
+        arr.push(item);
+      });
+      setTimeout(() => {
+        console.log(111);
+        this.orderListData();
+      }, 0.00001);
+      this.DetailsForm = arr;
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
- .header-btn {
+.header-btn {
   margin-top: 10px;
   margin-bottom: 10px;
   border: 1px solid #eee;
