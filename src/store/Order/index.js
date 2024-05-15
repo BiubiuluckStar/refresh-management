@@ -15,7 +15,6 @@ const actions={
   // 获取汇总清单
 async getCollectList({commit},{page}){
   let result = await reqCollectList({page})
-  console.log(result);
   if(result.status == 200){
     commit('GetCollectList',result)
     return 'ok'

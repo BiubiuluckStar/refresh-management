@@ -7,11 +7,12 @@ import pagination from '@/components/pagination'
 import '@/plugins/element'
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css'  //还会保留标签字体样式
-// import '@/assets/css/base.css'
 import *  as API from  '@/API'
+import JsonExcel from 'vue-json-excel'
 Vue.config.productionTip = false
 // 注册
 Vue.component('pagination',pagination)
+Vue.component('downloadExcel', JsonExcel)
 
 
 new Vue({

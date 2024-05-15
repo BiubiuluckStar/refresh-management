@@ -66,7 +66,33 @@ npm install @wangeditor/editor-for-vue --save
 2.3 js代码
 2.4引入css样式
 
-## vuex对于编辑页面的持久化存储
-## 商品编辑与添加携带不同的参数向mutations发请求，改变数值，然后在页面挂载的时候通过title判断是添加还是修改，若是修改将仓库中的值赋给data中的变量，然后进行图片回显，遍历图片回显，接着进行富文本编译器回显
+## 
+vuex对于编辑页面的持久化存储
+## 
+商品编辑与添加携带不同的参数向mutations发请求，改变数值，然后在页面挂载的时候通过title判断是添加还是修改，若是修改将仓库中的值赋给data中的变量，然后进行图片回显，遍历图片回显，接着进行富文本编译器回显
 商品保存功能，通过标题判断是添加还是修改，向服务器传递不同的参数
-## 不足：当编辑商品的时候将商品删除之后，还是存在，编辑之后进行添加操作，富文本编译器中的内容还是一直存在
+## 
+不足：当编辑商品的时候将商品删除之后，还是存在，编辑之后进行添加操作，富文本编译器中的内容还是一直存在
+导出excel表编号过长在excel表中显示的问题(已解决)
+
+## 导出excel 
+1. 安装模块
+   npm install vue-json-excel -S 
+
+2. 配置使用
+   ```js 
+      import JsonExcel from 'vue-json-excel'
+      Vue.component('downloadExcel', JsonExcel)
+   ```
+3. 使用
+   ```vue
+       <download-excel 
+         style="display:inline-block;margin-left:10px;"
+         :data="DetailsForm" 
+         :fields="json_fields" 
+         :header="title"
+         :name="title">
+          <el-button class="order-btn" type="warning" size="small" @click="download">导出</el-button>
+        </download-excel>
+   ```
+

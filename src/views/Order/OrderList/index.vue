@@ -70,12 +70,14 @@
           @click="orderCollection"
           >订单汇总</el-button
         >
-        <!-- <download-excel  -->
-        <!-- style="display:inline-block;margin-left:10px;"> -->
-        <el-button class="order-btn" type="warning" size="small"
-          >导出</el-button
-        >
-        <!-- </download-excel> -->
+          <download-excel 
+         style="display:inline-block;margin-left:10px;"
+         :data="DetailsForm" 
+         :fields="json_fields" 
+         :header="title"
+         :name="title">
+          <el-button class="order-btn" type="warning" size="small" >导出</el-button>
+        </download-excel>
       </div>
       <!-- 表格区域 -->
       <div class="content">
@@ -139,12 +141,27 @@ export default {
         ProductName: "",
         date: "",
       },
-      title:"采购订单表格",
       drawer: false,
       size: '',
       direction: 'rtl',
       tableData: [],
       ids: [], //存储汇总的id
+      title:"采购订单",  //导出名称
+      DetailsForm:[], //导出的数据
+      json_fields:{  
+        "订单编号":{
+          field:"code",
+          callback:value=>{
+            return '&nbsp;'+value;
+          }
+        },
+        "下单人":"ordername",
+        "所属单位":"company",
+        "联系电话":"phone",
+        "预定时间":"yudingTime",
+        "订单总价格":"price",
+        "汇总状态":"huizongStatus"
+      }
     };
   },
   mounted() {
@@ -185,6 +202,17 @@ export default {
         arr.push(item.id);
       });
       this.ids = arr;
+      // 存储勾选的当前的行便于导出excel数据
+     selection.forEach(item=>{
+      item.huizongStatus == 1 ? '未汇总' : '已汇总'
+      item.yudingTime = dayjs(item.yudingTime).format('YYYY/MM/DD')
+     })
+     this.DetailsForm = selection 
+    //  selection.forEach(ele=>{
+    //     ele.yudingTime = dayjs(ele.yudingTime).format('YYYY-MM-DD');
+    //     ele.huizongStatus = ele.huizongStatus==1?'未汇总':"已汇总";
+    //   })
+    //   this.DetailsForm = selection
     },
     // 订单汇总 1.获取选择的数据订单 2.提交汇总发请求 3.改变汇总状态为2
     async orderCollection() {
@@ -235,7 +263,7 @@ export default {
     let content =document.querySelector('.header').clientWidth
     this.size = content
     this.drawer = true
-    }
+    },
   },
 };
 </script>

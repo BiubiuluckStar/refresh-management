@@ -63,12 +63,14 @@
       </div>
       <!-- 3. 订单列表按钮 -->
       <div class="header-btn">
-        <!-- <download-excel  -->
-        <!-- style="display:inline-block;margin-left:10px;"> -->
-        <el-button class="order-btn" type="warning" size="small"
-          >导出</el-button
-        >
-        <!-- </download-excel> -->
+        <download-excel 
+         style="display:inline-block;margin-left:10px;"
+         :data="DetailsForm" 
+         :fields="json_fields" 
+         :header="title"
+         :name="title">
+          <el-button class="order-btn" type="warning" size="small" >导出</el-button>
+        </download-excel>
       </div>
       <!-- 表格区域 -->
       <div class="content">
@@ -82,6 +84,7 @@
             textAlgin: 'center',
           }"
           :cell-style="{ textAlgin: 'center' }"
+          @select="select"
         >
           <el-table-column type="selection" width="55"> </el-table-column>
           <el-table-column prop="orderNum" label="汇总单编号" width="180">
@@ -127,6 +130,21 @@ export default {
         date: "",
       },
       tableData: [],
+      title:"采购订单",  //导出名称
+      DetailsForm:[], //导出的数据
+      json_fields:{  
+        "汇总单编号":{
+          field:"orderNum",
+          callback:value=>{
+            return '&nbsp;'+value;
+          }
+        },
+        "汇总单编号":"orderNum",
+        "汇总人":"operator",
+        "联系电话":"phone",
+        "汇总时间":"time",
+        "汇总单总价格":"totalPrice",
+      }
     };
   },
   mounted() {
@@ -139,6 +157,13 @@ export default {
   },
   methods: {
     dayjs,
+    // 得到选中的行并导出
+    select(selection,row){
+    selection.forEach(item => {
+      item.time = dayjs(item.time).format('YYYY/MM/DD')
+    });
+    this.DetailsForm = selection
+    },
     // 撤销汇总
     async handleEdit(index, row) {
       try {
@@ -186,7 +211,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
--- > .header-btn {
+ .header-btn {
   margin-top: 10px;
   margin-bottom: 10px;
   border: 1px solid #eee;
