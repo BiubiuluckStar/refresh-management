@@ -2,6 +2,7 @@
   <div>
     <div>
       <!-- 面包导航屑 -->
+      <breadCrumb></breadCrumb>
       <!-- 产品搜索 -->
       <div class="header">
         <div class="form">

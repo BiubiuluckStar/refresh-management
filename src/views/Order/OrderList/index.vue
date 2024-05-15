@@ -1,5 +1,6 @@
 <template>
   <div class="order">
+    <breadCrumb></breadCrumb>
     <div class="list">
       <!-- 2. 列表展示 -->
       <div class="header">

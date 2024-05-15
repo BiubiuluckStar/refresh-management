@@ -14,73 +14,87 @@ import AboutProduct from '@/views/Product/List/AboutProduct'
 
 export default [
   {
-    path:'/',
-    component:Layout,
-    children:[
+    path: '/',
+    component: Layout,
+    children: [
       {
-        path:'/',
-        name:'home',
-        component:Home
+        path: '/',
+        name: 'home',
+        component: Home,
+        meta: {
+          title: '首页'
+        },
       },
       {
-        path:'/product',
-        component:Product,
-        children:[
+        path: '/product', //产品管理
+        component: Product,
+        meta: { title: '产品管理' },
+        redirect:'/product/list',
+        children: [
           {
-        name:'list',
-        path:'list',
-        component:List,
+            name: 'list',
+            path: 'list',
+            component: List,
+            meta: { title: '产品列表' },
           },
           {
-        name:'category',
-        path:'category',
-        component:Category
+            name: 'category',
+            path: 'category',
+            component: Category,
+            meta: { title: '产品分类' },
           },
           {
-            name:'aboutProduct', //商品添加与编辑与查看
-            path:'aboutProduct',
-            component:AboutProduct,
-            meta:{
+            name: 'aboutProduct', //商品添加与编辑与查看
+            path: 'aboutProduct',
+            component: AboutProduct,
+            meta: {
               //配置高亮标识
-              activeMenu:'/product/list'
+              activeMenu: '/product/list',
+              title: '产品详情'
             }
           }
         ]
       },
       {
-        path:'order',
-        component:Order,
-        children:[
+        path: 'order',
+        component: Order,
+        meta: { title: '订单管理' },
+        redirect:'/order/orderList',
+        children: [
           {
-            path:'orderList',
-            component:OrderList,
+            path: 'orderList',
+            component: OrderList,
+            meta: { title: '订单列表' },
           },
           {
-            path:'orderReview',
-            component:OrderReview,
+            path: 'orderReview',
+            component: OrderReview,
+            meta: { title: '订单审核' },
           },
           {
-            path:'summaryList',
-            component:SummaryList,
+            path: 'summaryList',
+            component: SummaryList,
+            meta: { title: '汇总清单' },
           },
         ]
       },
       {
-        path:'advertisement',
-        component:Advertisement,
-        children:[
+        path: 'advertisement',
+        component: Advertisement,
+        children: [
           {
-            path:'adverList',
-            component:AdverList,
+            path: 'adverList',
+            component: AdverList,
+            meta: { title: '广告列表' },
           }
         ]
       }
     ]
   },
   {
-    path:'/login',
-    name:'login',
-    component:Login
+    path: '/login',
+    name: 'login',
+    component: Login
   },
-  
+
 ]
