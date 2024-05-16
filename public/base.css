@@ -17,3 +17,7 @@ body{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f5f5f5;
 }
+/* login 高度设置 */
+html,body,#app{
+  height: 100%;
+}

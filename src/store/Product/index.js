@@ -81,8 +81,7 @@ const mutations = {
   changeTitle(state,val){
   state.title = val
   sessionStorage.setItem("title", JSON.stringify(val))
-  },
-  // 
+  }
 }
 const getters = {}
 const state = {

@@ -7,6 +7,7 @@ import product from './Product'
 import category from './Category'
 import order from './Order'
 import advert from './Advert'
+import login from './Login'
 
 export default new Vuex.Store({
   modules:{
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     product,
     category,
     order,
-    advert
+    advert,
+    login
   }
 })
