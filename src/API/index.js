@@ -61,6 +61,29 @@ export const reqCollectCancel = (params)=>requests.get('/order/cancel',{params})
 // 订单详情/list/detail
 export const reqOrderDetail = (params)=>requests.get('/order/list/detail',{params})
 
+// 广告获取 id
+export const reqAdvert = (params)=>requests.get('/advert/content/selectContentCategoryByParentId',{params})
+
+// 增加广告子导航  pid name
+export const reqAddAdvert = (params)=>requests.get('/advert/content/insertContentCategory',{params})
+
+// 修改子导航 pid
+export const reqUpdateAdvert = (params)=>requests.get('/advert/content/updateContentCategory',{params})
+
+// 删除子导航 pid
+export const reqDeleteAdvert = (params)=>requests.get('/advert/content/deleteContentCategoryById',{params})
+
+// 广告内容管理
+// 查看广告详情 pid
+export const reqContentMangeAdvert = (params)=>requests.get('/advert/content/selectTbContentAllByCategoryId',{params})
+
+// 添加内容 pid, name, contentUrl, image
+export const reqAddContentAdvert = (params)=>requests.get('/advert/content/insertTbContent',{params})
+
+// 删除内容  id
+export const reqDeleteContentAdvert = (params)=>requests.get('/advert/content/deleteContentByIds',{params})
+
+
 // 导出图片上传的地址
 export const reqUploadImage = './api/upload/'
 //公共接口

@@ -200,7 +200,6 @@ export default {
     async getCollectList(page) {
       try {
         await this.$store.dispatch("order/getCollectList", { page });
-        console.log(this.collectList);
         this.tableData = this.collectList;
       } catch (error) {
         console.warn(error);

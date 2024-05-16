@@ -35,7 +35,7 @@
         <el-menu-item-group>
           <el-menu-item index="/order/orderList">订单列表</el-menu-item>
           <el-menu-item index="/order/summaryList">汇总清单</el-menu-item>
-          <el-menu-item index="/order/orderReview">订单审核</el-menu-item>
+          <el-menu-item index="/order/OrderAgreement">订单审核</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="/advertisement">
@@ -47,10 +47,6 @@
           <el-menu-item index="/advertisement/AdverList">广告列表</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
-      </el-menu-item>
     </el-menu>
   </div>
 </template>

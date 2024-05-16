@@ -185,10 +185,8 @@ export default {
     },
     // 保存修改
     submitHandle(data){
-      console.log(this.title.slice(0,2));
       // 新增修改 1. 获取当前输入框的数据
     if(this.title.slice(0,2) == '新增'){
-      console.log('新增');
       this.AddChildrenCategory({cid:this.categoryData.cid,name:this.messageInput})
     }
     if(this.title.slice(0,2) == '修改'){

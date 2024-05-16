@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less" scoped>
 .bread{
   margin: 6px;
 }

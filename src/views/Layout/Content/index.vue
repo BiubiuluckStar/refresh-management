@@ -32,7 +32,7 @@ methods:{
 <style lang="less" scoped>
 .content{
     padding-left:200px;
-  transition: all 0.1s linear;
+    transition: all 0.1s linear;
 }
 .small{
     padding-left:64px;

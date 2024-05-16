@@ -6,7 +6,7 @@ import List from '@/views/Product/List'
 import Category from '@/views/Product/Category'
 import Order from '@/views/Order'
 import OrderList from '@/views/Order/OrderList'
-import OrderReview from '@/views/Order/OrderReview'
+import OrderAgreement from '@/views/Order/OrderAgreement'
 import SummaryList from '@/views/Order/SummaryList'
 import Advertisement from '@/views/Advertisement'
 import AdverList from '@/views/Advertisement/AdverList'
@@ -67,8 +67,8 @@ export default [
             meta: { title: '订单列表' },
           },
           {
-            path: 'orderReview',
-            component: OrderReview,
+            path: 'OrderAgreement',
+            component: OrderAgreement,
             meta: { title: '订单审核' },
           },
           {

@@ -96,5 +96,8 @@ vuex对于编辑页面的持久化存储
         </download-excel>
    ```
    ## 面包屑
+   element ui 组件库
+   ## PDF 
+   vue-pdf插件
    
 
