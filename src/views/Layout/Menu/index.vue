@@ -47,11 +47,23 @@
           <el-menu-item index="/advertisement/AdverList">广告列表</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
+      <el-submenu index="/systemManage">
+        <template slot="title">
+          <i class="el-icon-menu"></i>
+          <span>系统管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/systemManage/department">部门管理</el-menu-item>
+          <el-menu-item index="/systemManage/role">角色管理</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
     </el-menu>
   </div>
 </template>
 
 <script>
+
+
 export default {
   name: "Menu",
 

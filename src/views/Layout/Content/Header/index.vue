@@ -41,11 +41,14 @@ export default {
     time() {
       return dayjs(new Date()).format("YYYY年MM月DD日 ");
     },
- ...mapState('login',['username']),
+  username(){
+  return JSON.parse(sessionStorage.getItem('username'))
+}
   },
   methods: {
     ...mapMutations('login',['removeUser']),
     dayjs,
+    // 折叠
     changeMenu() {
       this.$bus.$emit("receiveIsCollapse");
       this.$emit("changeIsLeftLess");
@@ -54,11 +57,7 @@ export default {
     logOut(){
       // 跳转到登录页
       this.$router.push('/login')
-     sessionStorage.removeItem('token')
-     sessionStorage.removeItem('username')
-
-
-      
+      this.removeUser()
     }
   },
 };

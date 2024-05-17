@@ -83,10 +83,10 @@ export const reqAddContentAdvert = (params)=>requests.get('/advert/content/inser
 // 删除内容  id
 export const reqDeleteContentAdvert = (params)=>requests.get('/advert/content/deleteContentByIds',{params})
 
-// 登录 /login user pwd post传参直接写params
+// 登录  user pwd post传参直接写params
 export const reqLogin = (params)=>requests.post('/login',params)
 
-// 用户权限/permission token
+// 用户权限 token {token:''}
 export const reqLoginPermission = (params)=>requests.get('/permission',{params})
 
 // 导出图片上传的地址

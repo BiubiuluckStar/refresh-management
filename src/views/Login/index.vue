@@ -22,7 +22,7 @@
                />
            </div>
            <p class="login--btn">
-               <el-button id="loginBtn" type="primary" @click="getLogin" >登录</el-button>
+               <el-button id="loginBtn" type="primary" @click="login" >登录</el-button>
            </p>
        </div>
    </div>
@@ -43,9 +43,12 @@ export default {
    },
 methods:{
   ...mapMutations('login',['setUser']),
-  getLogin(){
+  login(){
+this.getLogin(this.username,this.pwd)
+  },
+  async getLogin(user,pwd){
     try {
-    this.$store.dispatch('login/reqLogin',{user:this.username,pwd:this.password})
+    await this.$store.dispatch('login/reqLogin',{user,pwd})
     this.$router.push('/')
     // 将登陆信息存储在vuex里面，实现组件数据的共享
     this.setUser(this.username)

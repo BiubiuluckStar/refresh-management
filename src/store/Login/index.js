@@ -25,6 +25,8 @@ sessionStorage.setItem('username',JSON.stringify(val))
 removeUser(state,val){
  state.username = ''
  state.token = ''
+ sessionStorage.removeItem('token')
+ sessionStorage.removeItem('username')
 }
 }
 const getters = {}
