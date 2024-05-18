@@ -12,7 +12,6 @@ const Mock = require("mockjs");
  * 广告分类管理--内容分类管理 导航
  */
  router.get("/content/selectContentCategoryByParentId", (req, res) => {
-    console.log('req.query.id',req.query.id);
     const id = req.query.id || 1;
     const sql = `select * from content where id='${id}'`;
     sqlFn(sql, [id], result => {

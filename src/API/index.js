@@ -84,7 +84,9 @@ export const reqAddContentAdvert = (params)=>requests.get('/advert/content/inser
 export const reqDeleteContentAdvert = (params)=>requests.get('/advert/content/deleteContentByIds',{params})
 
 // 登录  user pwd post传参直接写params
-export const reqLogin = (params)=>requests.post('/login',params)
+
+export const reqLogin = (params)=>requests.post('/login',params,{headers:{ 'Content-Type': 'application/json' }})
+
 
 // 用户权限 token {token:''}
 export const reqLoginPermission = (params)=>requests.get('/permission',{params})

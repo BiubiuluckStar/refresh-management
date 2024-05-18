@@ -44,7 +44,7 @@ export default {
 methods:{
   ...mapMutations('login',['setUser']),
   login(){
-this.getLogin(this.username,this.pwd)
+    this.getLogin(this.username,this.password)
   },
   async getLogin(user,pwd){
     try {

@@ -1,7 +1,6 @@
 import Layout from '@/views/Layout'
 import Login from '@/views/Login'
 import Home from '@/views/Home'
-
 // 基础路径首页
 export const baseRouter =  [ {
   path: '/',

@@ -37,7 +37,7 @@ export default  [
       meta: {
         //配置高亮标识
         activeMenu: '/product/list',
-        title: '产品详情'
+        title: '添加商品'
       }
     }
   ]
@@ -68,7 +68,7 @@ export default  [
 {
   path: 'advertisement',
   component: Advertisement,
-  meta:{title:'广告管理'},
+  meta:{title:'广告分类'},
   children: [
     {
       path: 'adverList',

@@ -1,6 +1,8 @@
 //搭建express服务
 const express = require('express')
 const app = express()
+app.use(express.json())
+
 //post 请求表单数据
 app.use(express.urlencoded({ extended: true }))
 //资源共享---只有打包的时候再去共享资源 研发不共享

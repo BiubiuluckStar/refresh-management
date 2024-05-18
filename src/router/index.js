@@ -44,7 +44,6 @@ VueRouter.prototype.replace = function(location,resolve,reject){
 import store from '@/store'
 // 配置路由全局前置导航守卫
 router.beforeEach((to, from, next) => {
-  console.log(from);
   // 判断当前进入的路由界面是否需要登录，不需登录的可以直接放行
   if(from.path == '/login' ||  to.matched.some(item =>item.meta.isLogin)){  //需要登录
   // 判断是否已经登录了，token的值是否存在
