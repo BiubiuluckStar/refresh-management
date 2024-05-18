@@ -7,6 +7,7 @@ export const baseRouter =  [ {
   component: Layout,
   meta:{title:'首页',
   isLogin:true , // 是否需要登录
+  },
   children: [
     {
       path: '/',
@@ -18,8 +19,6 @@ export const baseRouter =  [ {
     },
     // 首页下的菜单导航内容 ----- 通过动态请求获取添加
   ],
-  
-  }
 }]
 export default [
   {

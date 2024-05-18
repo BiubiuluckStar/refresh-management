@@ -51,7 +51,14 @@ router.beforeEach((to, from, next) => {
     // 获取动态的菜单导航
     // 判断当前存储的vuex里面是否已经有动态导航了，如果没有，获取动态导航
     if(!store.state.menu.dyMenuList.length){ //没导航
-      store.dispatch('menu/getLoginPermission')
+      store.dispatch('menu/getLoginPermission').then(MybaseRouter=>{
+        console.log('MybaseRouter',MybaseRouter);
+      // 将导航菜单追加到路由实例上,遍历当前路由追加到路由规则上
+      MybaseRouter.forEach(item=>{
+        router.addRoute(item)
+      })
+      })
+      next()
     }
   next()
   }
