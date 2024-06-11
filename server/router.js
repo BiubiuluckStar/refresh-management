@@ -11,8 +11,6 @@ const Mock = require("mockjs");
 //数据
 const data = require("./data/format.json");
 
-const vipLogin = require("./login/data/vip_login.json");
-const adminLogin = require("./login/data/admin_login.json");
 const adminPermission = require("./login/data/admin_permission.json");
 const vipPermission = require("./login/data/vip_permission.json");
 
@@ -20,11 +18,32 @@ const vipPermission = require("./login/data/vip_permission.json");
 router.post("/login", (req, res) => {
   const username = req.body.user;
   const pwd = req.body.pwd;
-  if (username === 'admin') {//超级管理员
-      res.send(adminLogin)
-  } else {
-      res.send(vipLogin)//普通VIP用户 
-  }
+  const sql = `select * from userinfo where username = '${username}' and password = '${pwd}'`
+  sqlFn(sql, [username,pwd], (result) => {
+if(result.length>0){
+  if (result[0].username === 'admin') {//超级管理员
+  res.send({
+    "status": 200,
+    "message": "登录成功",
+    "token": "admin"
+})
+} else {  //普通VIP用户 
+  res.send({
+    "status": 200,
+    "message": "登录成功",
+    "token": "vip"
+  })
+}
+}
+else{
+  console.log(33); 
+  res.send({
+    status: 500,
+    msg: "登录失败",
+  });
+}
+  });
+
 })
 
 //用户权限数据接口
@@ -214,7 +233,6 @@ router.get("/goods/deleteItemById", (req, res) => {
  */
 router.get("/goods/itemCategory/selectItemCategoryByParentId", (req, res) => {
   const type = req.query.type || 1;
-  console.log("type", type);
   const sql = "select * from category where type=?";
   var arr = [type];
   sqlFn(sql, arr, (result) => {
@@ -314,11 +332,10 @@ router.post('/batchUpload', upload.single('file'), function (req, res, next) {
   var descs = req.query.descs || "";
   var paramsInfo = req.query.paramsInfo || "";
   var image = req.query.image || "[]";
+  var create_time = new Date()
 
-  const sql = "insert into project(title, image, sellPoint, price, cid, category, num, descs,paramsInfo) values (?,?,?,?,?,?,?,?,?)"
-  var arr = [title, image, sellPoint, price, cid, category, num, descs,paramsInfo];
-  console.log(arr);
-
+  const sql = "insert into project(title, image, sellPoint, price, cid, category, num,create_time,descs,paramsInfo) values (?,?,?,?,?,?,?,?,?,?)"
+  var arr = [title, image, sellPoint, price, cid, category, num,create_time,descs,paramsInfo];
   sqlFn(sql, arr, result => {
       if (result.affectedRows > 0) {
           res.send({
@@ -354,7 +371,8 @@ router.post('/batchUpload', upload.single('file'), function (req, res, next) {
   var paramsInfo = req.query.paramsInfo || "";
   var image = req.query.image || "";
   var sql = "update project set title=?,sellPoint=?,price=?,cid=?,category=?,num=?,descs=?,paramsInfo=?,image=? where id=?";
-  var arr = [title, sellPoint, price, cid, category, num, desc, paramsInfo, image, id];
+  var arr = [title, sellPoint, price, cid, category, num,desc, paramsInfo, image, id];
+  console.log(sql,arr);
   sqlFn(sql, arr, result => {
       if (result.affectedRows > 0) {
           res.send({

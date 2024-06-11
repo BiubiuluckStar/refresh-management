@@ -9,7 +9,6 @@ import order from './Order'
 import advert from './Advert'
 import login from './Login'
 import menu from './menu'
-
 export default new Vuex.Store({
   modules:{
     home,
@@ -19,5 +18,6 @@ export default new Vuex.Store({
     advert,
     login,
     menu
-  }
+  },
+
 })

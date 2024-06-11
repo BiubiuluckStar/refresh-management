@@ -47,6 +47,8 @@ export default {
   },
   methods: {
     ...mapMutations('login',['removeUser']),
+    ...mapMutations('menu',['removeMenuList']),
+
     dayjs,
     // 折叠
     changeMenu() {
@@ -57,7 +59,10 @@ export default {
     logOut(){
       // 跳转到登录页
       this.$router.push('/login')
+      // 清除用户信息
       this.removeUser()
+      // 清除菜单导航
+      this.removeMenuList()
     }
   },
 };
@@ -67,6 +72,7 @@ export default {
 .header {
   display: flex;
   height: 50px;
+  // background: #43A047;
   background: #1574c2;
   color: #fff;
   line-height: 50px;

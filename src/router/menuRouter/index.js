@@ -1,39 +1,28 @@
-import Product from '@/views/Product'
-import List from '@/views/Product/List'
-import Category from '@/views/Product/Category'
-import Order from '@/views/Order'
-import OrderList from '@/views/Order/OrderList'
-import OrderAgreement from '@/views/Order/OrderAgreement'
-import SummaryList from '@/views/Order/SummaryList'
-import Advertisement from '@/views/Advertisement'
-import AdverList from '@/views/Advertisement/AdverList'
-import AboutProduct from '@/views/Product/List/AboutProduct'
-import SystemManage from '@/views/SystemManage'
-import department from '@/views/SystemManage/department'
-import role from '@/views/SystemManage/role'
+// 路由懒加载
 export default  [
+  // 产品
   {
   path: '/product', //产品管理
-  component: Product,
+  component:()=> import ('@/views/Product'),
   meta: { title: '产品管理' },
   redirect:'/product/list',
   children: [
     {
       name: 'list',
-      path: 'list',
-      component: List,
+      path: '/product/list',
+      component:()=> import ('@/views/Product/List'),
       meta: { title: '产品列表' },
     },
     {
       name: 'category',
-      path: 'category',
-      component: Category,
+      path: '/product/category',
+      component: ()=> import ('@/views/Product/Category'),
       meta: { title: '产品分类' },
     },
     {
       name: 'aboutProduct', //商品添加与编辑与查看
-      path: 'aboutProduct',
-      component: AboutProduct,
+      path: '/product/aboutProduct',
+      component:  ()=> import ('@/views/Product/List/AboutProduct'),
       meta: {
         //配置高亮标识
         activeMenu: '/product/list',
@@ -42,54 +31,67 @@ export default  [
     }
   ]
 },
+// 订单
 {
+  name:'order',
   path: 'order',
-  component: Order,
+  component:()=> import('@/views/Order'),
   meta: { title: '订单管理' },
   redirect:'/order/orderList',
   children: [
     {
-      path: 'orderList',
-      component: OrderList,
+      name: 'orderList',
+      path: '/order/orderList',
+      component: ()=> import('@/views/Order/OrderList'),
+      meta: { title: '订单管理' },
       meta: { title: '订单列表' },
     },
     {
-      path: 'OrderAgreement',
-      component: OrderAgreement,
+      name: 'OrderAgreement',
+      path: '/order/OrderAgreement',
+      component: ()=> import('@/views/Order/OrderAgreement'),
       meta: { title: '订单审核' },
     },
     {
-      path: 'summaryList',
-      component: SummaryList,
+      name: 'summaryList',
+      path: '/order/summaryList',
+      component: ()=> import('@/views/Order/SummaryList'),
       meta: { title: '汇总清单' },
     },
   ]
 },
+// 广告
 {
+  name: 'advertisement',
   path: 'advertisement',
-  component: Advertisement,
+  component: ()=> import('@/views/Advertisement'),
   meta:{title:'广告分类'},
   children: [
     {
-      path: 'adverList',
-      component: AdverList,
+      name: 'adverList',
+      path: '/advertisement/adverList',
+      component: ()=> import('@/views/Advertisement/AdverList'),
       meta: { title: '广告列表' },
     }
   ]
 },
+// 系统
 {
+  name: 'systemManage',
   path: 'systemManage',
-  component: SystemManage,
+  component: ()=> import('@/views/SystemManage'),
   meta:{title:'系统管理'},
   children: [
     {
-      path: 'department',
-      component: department,
+      name: 'department',
+      path: '/systemManage/department',
+      component: ()=> import('@/views/SystemManage/department'),
       meta: { title: '部门管理' },
     },
     {
-      path: 'role',
-      component: role,
+      name: 'role',
+      path: '/systemManage/role',
+      component: ()=> import('@/views/SystemManage/role'),
       meta: { title: '角色管理' },
     }
   ]

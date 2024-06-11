@@ -45,9 +45,12 @@ import store from '@/store'
 // 配置路由全局前置导航守卫
 router.beforeEach((to, from, next) => {
   // 判断当前进入的路由界面是否需要登录，不需登录的可以直接放行
-  if(from.path == '/login' ||  to.matched.some(item =>item.meta.isLogin)){  //需要登录
+  if(to.matched.length &&  !to.matched.some(item =>item.meta.isLogin)){  //不需要登录
+  next()
+   } 
+  else{  //需要登陆
   // 判断是否已经登录了，token的值是否存在
-  if(store.state.login.token){  //登录过了
+  if(sessionStorage.getItem('token')){  //登录过了
     // 获取动态的菜单导航
     // 判断当前存储的vuex里面是否已经有动态导航了，如果没有，获取动态导航
     if(!store.state.menu.dyMenuList.length){ //没导航
@@ -66,9 +69,7 @@ router.beforeEach((to, from, next) => {
     next('/login')
   }
   }
-  else{
-    next();  //不需要登录
-  }
-});
+  })
+
 export default router
 

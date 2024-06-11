@@ -16,6 +16,7 @@ let MyMenu =  rulesMenu(menuRouter,result.data)
 // 但是为了避免对于baseRouter的修改，对它进行深拷贝
 let MybaseRouter = cloneDeep(baseRouter)
 MybaseRouter[0].children.push(...MyMenu)
+console.log(MybaseRouter,baseRouter);
 // 存储动态菜单导航
  commit('setMenuList',MyMenu)
 return MybaseRouter

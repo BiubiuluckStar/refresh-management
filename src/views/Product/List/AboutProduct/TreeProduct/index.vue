@@ -10,8 +10,7 @@ export default {
         label: "name",
         children: "zones",
         isLeaf: "leaf",
-      },
-      TreeData: [],
+      }
     };
   },
   methods: {

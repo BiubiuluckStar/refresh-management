@@ -144,7 +144,7 @@ export default {
       tableData: [],
       currentPage: 1,
       params: { search: "" },
-      ids:[] , //存储选中的id
+      ids:[], //存储选中的id，
     };
   },
   methods: {
@@ -153,7 +153,10 @@ export default {
     ...mapMutations('product',['changeEditorData','changeTitle']),
     // 查看商品详情
     handleLook(index,row){
-      this.$router.push('/product/aboutProduct')
+      this.changeEditorData(row)
+      this.$router.push({
+        name:'aboutProduct'
+      })
       this.changeTitle('详情')
     },
     // 点击勾选选择框得到id数组

@@ -98,7 +98,7 @@
         >
           <el-table-column type="selection" width="55" :selectable="selectable">
           </el-table-column>
-          <el-table-column prop="code" label="订单编号" width="180">
+          <el-table-column prop="code" label="订单编号" width="180" >
             <template slot-scope="scope">
               <span class="productName" @click="handleLook(scope.$index, scope.row)">{{ scope.row.code}}</span>
             </template>
@@ -151,7 +151,7 @@ export default {
       ids: [], //存储汇总的id
       title:"采购订单",  //导出名称
       DetailsForm:[], //导出的数据
-      json_fields:{  
+      json_fields:{     //设置导出数据的格式
         "订单编号":{
           field:"code",
           callback:value=>{
@@ -272,7 +272,6 @@ export default {
       arr.push(item)
     })
       setTimeout(()=>{
-      console.log(111);
       this.orderListData()
     },0.00001)
     this.DetailsForm = arr
@@ -282,8 +281,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .productName{
-  color:blue
+  color:blue;
+ cursor: pointer;
 }
 .header-btn {
   margin-top: 10px;

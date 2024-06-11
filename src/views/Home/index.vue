@@ -116,20 +116,21 @@ export default {
     num(value) {
       if (!value) return;
       return value.toLocaleString();
-    },
+    }
   },
   methods: {
     echarts() {
       var myChart = echarts.init(document.getElementById("charts"));
       myChart.setOption({
-        tooltip: {
-          trigger: "axis",
+        tooltip: {  //提示框组件
+          trigger: "axis", //x轴
         },
         xAxis: {
-          data: JSON.parse(sessionStorage.getItem('arrx')) ,
+          data: JSON.parse(sessionStorage.getItem('arrx'))
         },
         legend: {},
         yAxis: {},
+        // 动态加载数据
         series: [
           {
             name: "销售量",

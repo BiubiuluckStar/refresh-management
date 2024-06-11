@@ -2,11 +2,12 @@ import {reqLogin} from '@/API'
 const actions = {
   async reqLogin({commit},params){
   let result = await reqLogin(params)
+  console.log('login',result);
   if(result.status == 200){
     commit('getToken',result.token)
     return 'ok'
   }
-  else{
+  else {
     return Promise.reject(Error('faile'))
   }
   }

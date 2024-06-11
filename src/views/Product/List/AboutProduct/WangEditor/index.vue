@@ -82,7 +82,6 @@ export default {
 };
 </script>
 
-<!-- <style src="@wangeditor/editor/dist/css/style.css"></style> -->
 <style>
 .w-e-text-container {
   height: 500px !important; /*!important是重点，因为原div是行内样式设置的高度300px*/

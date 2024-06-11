@@ -3,16 +3,18 @@
     <breadCrumb></breadCrumb>
     <div class="content">
       订单合同：<el-button @click="checkAgreement">查看合同</el-button>
-      <!-- PDF打印 查询关键词 ：vue实现PDF打印 -->
-     
     </div>
-    <el-dialog
+       <!-- <Vuepdf >
+       <el-dialog
         title="查看合同内容"
         :visible="dialogVisible"
         width="30%"
         :before-close="handleClose"
       >
-        <span>这是一段信息</span>
+        <span>
+          <img src="/public/agreement.pdf" />
+        </span>
+
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="dialogVisible = false"
@@ -20,14 +22,20 @@
           >
         </span>
       </el-dialog>
+    </Vuepdf>  -->
+    <Vuepdf :dialogVisible="dialogVisible" @changeDialog="changeDialog"></Vuepdf>
+
+  
   </div>
 </template>
 
 <script>
-//  import pdf from 'vue-pdf'
+import Vuepdf from './Vuepdf.vue'
 export default {
   name: "OrderArgeement",
-  // components: {pdf},
+  components: {
+    Vuepdf
+  },
   data() {
       return {
         dialogVisible: false
@@ -37,13 +45,9 @@ export default {
       checkAgreement(){
       this.dialogVisible = true
       },
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      }
+    changeDialog(){
+      this.dialogVisible = false;
+    }
     }
 };
 </script>
